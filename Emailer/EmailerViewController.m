@@ -28,6 +28,7 @@
 
 
 @implementation EmailerViewController
+
 @synthesize fileList;
 
 - (void)viewDidLoad
@@ -56,6 +57,9 @@
 
 - (IBAction)deleteButton:(id)sender {
     [self deleteFiles];
+}
+
+- (IBAction)settingsButton:(id)sender {
 }
 
 - (IBAction)openMail:(UIButton *)sender {

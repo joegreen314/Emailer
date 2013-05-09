@@ -8,7 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface EmailerAppDelegate : UIResponder <UIApplicationDelegate>
+@interface EmailerAppDelegate : UIResponder <UIApplicationDelegate> {
+    UIPopoverController *createPatientPopover;
+}
 
 @property (strong, nonatomic) UIWindow *window;
 

@@ -67,7 +67,8 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="X8n-LW-eVh" kind="popover" identifier="pushSeque" popoverAnchorView="uqq-64-ayd" id="FnR-08-qDy">
+                                    <action selector="settingsButton:" destination="2" eventType="touchUpInside" id="ydQ-84-FTD"/>
+                                    <segue destination="X8n-LW-eVh" kind="popover" identifier="openSettings" popoverAnchorView="uqq-64-ayd" id="FnR-08-qDy">
                                         <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
                                     </segue>
                                 </connections>
@@ -274,6 +275,7 @@
                 <relationship kind="action" name="deleteButton:"/>
                 <relationship kind="action" name="openMail:" candidateClass="UIButton"/>
                 <relationship kind="action" name="refreshButton:" candidateClass="UIButton"/>
+                <relationship kind="action" name="settingsButton:"/>
                 <relationship kind="outlet" name="deleteFilesButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="fileList" candidateClass="UITableView"/>
                 <relationship kind="outlet" name="refreshButton" candidateClass="UIButton"/>
