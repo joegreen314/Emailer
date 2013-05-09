@@ -44,9 +44,9 @@
     }
     else {
         self.sendEmailButton.enabled = NO;
-        self.sendEmailButton.alpha=.3;
+        self.sendEmailButton.alpha=.5;
         self.deleteFilesButton.enabled = NO;
-        self.deleteFilesButton.alpha=.3;
+        self.deleteFilesButton.alpha=.5;
     }
 }
 

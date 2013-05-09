@@ -58,7 +58,6 @@
     }
     [MailFields setRecipients:recipientFields];
     //[MailFields setRecipients:self.toField.text];
-    [self.popover dismissPopoverAnimated:YES];
 }
 
 - (void)didReceiveMemoryWarning
