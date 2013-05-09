@@ -42,7 +42,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		AB95D23B172EF16700898221 /* Emailer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Emailer.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		AB95D23B172EF16700898221 /* DLmailer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DLmailer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB95D23F172EF16700898221 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		AB95D241172EF16700898221 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		AB95D243172EF16700898221 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -114,7 +114,7 @@
 		AB95D23C172EF16700898221 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				AB95D23B172EF16700898221 /* Emailer.app */,
+				AB95D23B172EF16700898221 /* DLmailer.app */,
 				AB95D262172EF16800898221 /* EmailerTests.octest */,
 			);
 			name = Products;
@@ -202,7 +202,7 @@
 			);
 			name = DLmailer;
 			productName = Emailer;
-			productReference = AB95D23B172EF16700898221 /* Emailer.app */;
+			productReference = AB95D23B172EF16700898221 /* DLmailer.app */;
 			productType = "com.apple.product-type.application";
 		};
 		AB95D261172EF16700898221 /* EmailerTests */ = {

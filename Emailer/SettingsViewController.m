@@ -10,7 +10,6 @@
 #import "MailFields.h"
 
 @interface SettingsViewController ()
-@property (strong, nonatomic) IBOutlet UITextField *toField;
 @property (weak, nonatomic) IBOutlet UITextField *subjectField;
 @property (weak, nonatomic) IBOutlet UITextView *bodyField;
 @property (weak, nonatomic) IBOutlet UIToolbar *saveButton;
@@ -35,12 +34,10 @@
     [super viewDidLoad];
     _popover = [[UIPopoverController alloc] initWithContentViewController:self];
     int index=0;
-    if([[MailFields defaultFields] recipients].count){
-        for(UITextField *field in self.toFields) {
-            if([[[MailFields defaultFields] recipients] count]>index) {
-                field.text=[[[MailFields defaultFields] recipients] objectAtIndex:index];
-                index++;
-            }
+    for(UITextField *field in self.toFields) {
+        if([[[MailFields defaultFields] recipients] count]>index) {
+            field.text=[[[MailFields defaultFields] recipients] objectAtIndex:index];
+            index++;
         }
     }
     //self.toField.text=[[MailFields defaultFields] recipients][0];
@@ -99,7 +96,6 @@
 }
 
 - (void)viewDidUnload {
-    [self setToField:nil];
     [self setSubjectField:nil];
     [self setBodyField:nil];
     [self setSaveButton:nil];

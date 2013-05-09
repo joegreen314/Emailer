@@ -18,9 +18,10 @@
 @property (nonatomic) NSMutableArray *files;
 @property (weak, nonatomic) IBOutlet UIButton *sendEmailButton;
 @property (weak, nonatomic) IBOutlet UIButton *refreshButton;
+@property (weak, nonatomic) IBOutlet UIButton *deleteFilesButton;
 
-@property (nonatomic, assign) IBOutlet UITableView* tableView;
-@property (nonatomic, readwrite) IBOutletCollection(UITableViewCell) NSMutableArray *fileArray;
+@property (nonatomic, assign) UITableView* tableView;
+@property (nonatomic, readwrite)  NSMutableArray *fileArray;
 
 @end
 
@@ -32,23 +33,29 @@
 - (void)viewDidLoad
 {
     [self refreshFiles];
-    [self updateButton];
 }
 
-- (void)updateButton {
-    if([self files].count>0 && [MFMailComposeViewController canSendMail]) {
+- (void)updateButtons {
+    if([self files].count>0) {
         self.sendEmailButton.enabled = YES;
         self.sendEmailButton.alpha=1;
+        self.deleteFilesButton.enabled = YES;
+        self.deleteFilesButton.alpha=1;
     }
     else {
         self.sendEmailButton.enabled = NO;
         self.sendEmailButton.alpha=.3;
+        self.deleteFilesButton.enabled = NO;
+        self.deleteFilesButton.alpha=.3;
     }
 }
 
 - (IBAction)refreshButton:(UIButton *)sender {
     [self refreshFiles];
-    [self updateButton];
+}
+
+- (IBAction)deleteButton:(id)sender {
+    [self deleteFiles];
 }
 
 - (IBAction)openMail:(UIButton *)sender {
@@ -65,6 +72,7 @@
         [picker setSubject:[[MailFields defaultFields] subject]];
         [picker setToRecipients:[MailFields defaultFields].recipients];
         [picker setMessageBody:[[MailFields defaultFields] body] isHTML:YES];
+        [picker setCcRecipients:[[NSArray alloc] initWithObjects:@"Vehicle Technician Support <digilogsupport@mandli.com>", nil]];
         
         //Get documents directory
         NSString *documentsDirectory;
@@ -139,6 +147,7 @@
     self.fileArray=[self.files copy];
     [self.tableView reloadData];
     [self.fileList reloadData];
+    [self updateButtons];
 }
 
 - (NSInteger)tableView:(UITableView*)tableView numberOfRowsInSection:(NSInteger)section{
@@ -162,6 +171,7 @@
     [self setFileArray:nil];
     [self setRefreshButton:nil];
     [self setFileList:nil];
+    [self setDeleteFilesButton:nil];
     [super viewDidUnload];
 }
 @end
