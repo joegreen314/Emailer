@@ -30,6 +30,8 @@
 @implementation EmailerViewController
 
 @synthesize fileList;
+@synthesize svc;
+@synthesize currentPopoverSegue;
 
 - (void)viewDidLoad
 {
@@ -60,6 +62,18 @@
 }
 
 - (IBAction)settingsButton:(id)sender {
+}
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if([[segue identifier]isEqualToString:@"openSettings"]){
+        currentPopoverSegue = (UIStoryboardPopoverSegue *)segue;
+        svc = [segue destinationViewController];
+        [svc setDelegate:self];
+    }
+}
+-(void)dismissPop{
+    [[currentPopoverSegue popoverController] dismissPopoverAnimated:YES];
+    //dismiss the popover
 }
 
 - (IBAction)openMail:(UIButton *)sender {

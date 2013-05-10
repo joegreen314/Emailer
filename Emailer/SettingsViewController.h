@@ -6,15 +6,19 @@
 //  Copyright (c) 2013 Digilog. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>@protocol SettingsViewControllerDelegate;
+#import <UIKit/UIKit.h>
+@protocol SettingsViewControllerDelegate;
 
 @interface SettingsViewController : UITableViewController
+
+@property (weak) id<SettingsViewControllerDelegate> delegate;
+
 @end
 
 @protocol SettingsViewControllerDelegate <NSObject>
 
 @required
 
--(void)dismissPop:(NSString*)value;
+-(void)dismissPop;
 
 @end

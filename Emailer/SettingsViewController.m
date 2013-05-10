@@ -19,6 +19,7 @@
 @end
 
 @implementation SettingsViewController
+@synthesize delegate;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -58,7 +59,14 @@
     }
     [MailFields setRecipients:recipientFields];
     //[MailFields setRecipients:self.toField.text];
+    
+    [delegate dismissPop];
 }
+- (IBAction)cancelButton:(id)sender {
+    [delegate dismissPop];
+}
+
+
 
 - (void)didReceiveMemoryWarning
 {
