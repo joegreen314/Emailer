@@ -277,6 +277,10 @@
         <class className="EmailerViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/EmailerViewController.h"/>
             <relationships>
+                <relationship kind="action" name="deleteButton:"/>
+                <relationship kind="action" name="openMail:" candidateClass="UIButton"/>
+                <relationship kind="action" name="refreshButton:" candidateClass="UIButton"/>
+                <relationship kind="action" name="settingsButton:"/>
                 <relationship kind="outlet" name="deleteFilesButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="fileList" candidateClass="UITableView"/>
                 <relationship kind="outlet" name="refreshButton" candidateClass="UIButton"/>
