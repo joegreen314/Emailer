@@ -273,6 +273,28 @@
         <image name=" " width="16" height="16"/>
         <image name="background.png" width="768" height="1024"/>
     </resources>
+    <classes>
+        <class className="EmailerViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/EmailerViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="deleteFilesButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="fileList" candidateClass="UITableView"/>
+                <relationship kind="outlet" name="refreshButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="sendEmailButton" candidateClass="UIButton"/>
+            </relationships>
+        </class>
+        <class className="SettingsViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SettingsViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="cancelButton:"/>
+                <relationship kind="action" name="saveSettings:" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="bodyField" candidateClass="UITextView"/>
+                <relationship kind="outlet" name="saveButton" candidateClass="UIToolbar"/>
+                <relationship kind="outlet" name="subjectField" candidateClass="UITextField"/>
+                <relationship kind="outletCollection" name="toFields" candidateClass="UITextField"/>
+            </relationships>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackTranslucent"/>
         <simulatedOrientationMetrics key="orientation"/>

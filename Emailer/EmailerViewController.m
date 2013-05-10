@@ -25,8 +25,6 @@
 
 @end
 
-
-
 @implementation EmailerViewController
 
 @synthesize fileList;
@@ -78,53 +76,28 @@
 
 - (IBAction)openMail:(UIButton *)sender {
     
-    
-    NSFileManager *fileMgr = [NSFileManager defaultManager];
-    NSError *err;
-    
     if([MFMailComposeViewController canSendMail]) {
         
+        MFMailComposeViewController *mailer = [[MFMailComposeViewController alloc] init];
+        mailer.mailComposeDelegate = self;
+        [mailer setSubject:[[MailFields defaultFields] subject]];
+        [mailer setToRecipients:[MailFields defaultFields].recipients];
+        [mailer setMessageBody:[[MailFields defaultFields] body] isHTML:YES];
+        [mailer setCcRecipients:[[NSArray alloc] initWithObjects:@"Vehicle Technician Support <digilogsupport@mandli.com>", nil]];
         
-        MFMailComposeViewController *picker = [[MFMailComposeViewController alloc] init];
-        picker.mailComposeDelegate = self;
-        [picker setSubject:[[MailFields defaultFields] subject]];
-        [picker setToRecipients:[MailFields defaultFields].recipients];
-        [picker setMessageBody:[[MailFields defaultFields] body] isHTML:YES];
-        [picker setCcRecipients:[[NSArray alloc] initWithObjects:@"Vehicle Technician Support <digilogsupport@mandli.com>", nil]];
-        
-        //Get documents directory
-        NSString *documentsDirectory;
-        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-        if ([paths count] > 0) {
-            documentsDirectory = [paths objectAtIndex:0];
-        }
-
-        NSArray * files = [fileMgr contentsOfDirectoryAtPath:documentsDirectory error:&err];
-        
-        if (files)
-        {
-            for(int index=0;index<files.count;index++)
-            {
-                NSString * file = [files objectAtIndex:index];
-                
-                    NSString *path = [NSString stringWithFormat:@"%@/%@", documentsDirectory,file ];
-                    NSData *data = [NSData dataWithContentsOfFile:path];
-                    [picker addAttachmentData:data mimeType:@"error/zip" fileName:file];
-            }
-            [self refreshFiles];
-            [self presentViewController:picker animated:YES completion:nil];
-            
+        for(FileInfo *file in self.files) {
+            NSString *path = [NSString stringWithFormat:@"%@", file.filePath ];
+            NSData *data = [NSData dataWithContentsOfFile:path];
+            [mailer addAttachmentData:data mimeType:@"error/zip" fileName:file.name];
         }
         
+        [self presentViewController:mailer animated:YES completion:nil];
     }
-    
 }
 -(void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult: (MFMailComposeResult)result error: (NSError*)error {
-    if(result==MFMailComposeResultSent)
-    {
+    if(result==MFMailComposeResultSent){
         [self deleteFiles];
     }
-
     [self dismissModalViewControllerAnimated:YES];
 }
 
@@ -142,26 +115,24 @@
 
 
 -(void)refreshFiles {
-    self.files=nil;
-    self.files=[[NSMutableArray alloc]init];
+    [self.files removeAllObjects];
+    self.files = [[NSMutableArray alloc] init];
     NSFileManager *fileMgr = [NSFileManager defaultManager];
     NSString *documentsDirectory;
+    NSArray * fileNames;
     NSArray *p = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    if ([p count] > 0) {
+    if ([p count]) {
         documentsDirectory = [p objectAtIndex:0];
+        fileNames = [fileMgr contentsOfDirectoryAtPath:documentsDirectory error:nil];
     }
-    
-    NSArray * fileNames = [fileMgr contentsOfDirectoryAtPath:documentsDirectory error:nil];
     if (fileNames) {
-        
         for(int index = 0; index<fileNames.count; index++) {
             NSString * fileName = [fileNames objectAtIndex:index];
-            
-
-                FileInfo *file = [[FileInfo alloc]initFile:fileName inDirectory:documentsDirectory withSize:@" "];
-                [self.files addObject:file];
+            FileInfo *file = [[FileInfo alloc]initFile:fileName inDirectory:documentsDirectory withSize:@" "];
+            [self.files addObject:file];
         }
     }
+    
     self.fileArray=[self.files copy];
     [self.tableView reloadData];
     [self.fileList reloadData];
@@ -176,7 +147,7 @@
     
     static NSString *CellIdentifier = @"Cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil) {
+    if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     cell.textLabel.text = [[self.fileArray objectAtIndex:indexPath.row] name];
