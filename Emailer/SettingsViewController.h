@@ -7,6 +7,18 @@
 //
 
 #import <UIKit/UIKit.h>
+@protocol SettingsViewControllerDelegate;
 
 @interface SettingsViewController : UITableViewController
+
+@property (weak) id<SettingsViewControllerDelegate> delegate;
+
+@end
+
+@protocol SettingsViewControllerDelegate <NSObject>
+
+@required
+
+-(void)dismissPop;
+
 @end
