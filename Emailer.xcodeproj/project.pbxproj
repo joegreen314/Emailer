@@ -13,9 +13,6 @@
 		AB95D24A172EF16700898221 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = AB95D248172EF16700898221 /* InfoPlist.strings */; };
 		AB95D24C172EF16700898221 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AB95D24B172EF16700898221 /* main.m */; };
 		AB95D250172EF16700898221 /* EmailerAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AB95D24F172EF16700898221 /* EmailerAppDelegate.m */; };
-		AB95D252172EF16700898221 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = AB95D251172EF16700898221 /* Default.png */; };
-		AB95D254172EF16700898221 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AB95D253172EF16700898221 /* Default@2x.png */; };
-		AB95D256172EF16700898221 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AB95D255172EF16700898221 /* Default-568h@2x.png */; };
 		AB95D259172EF16700898221 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AB95D257172EF16700898221 /* MainStoryboard.storyboard */; };
 		AB95D25C172EF16700898221 /* EmailerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB95D25B172EF16700898221 /* EmailerViewController.m */; };
 		AB95D264172EF16800898221 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB95D263172EF16800898221 /* SenTestingKit.framework */; };
@@ -52,9 +49,6 @@
 		AB95D24D172EF16700898221 /* Emailer-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Emailer-Prefix.pch"; sourceTree = "<group>"; };
 		AB95D24E172EF16700898221 /* EmailerAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EmailerAppDelegate.h; sourceTree = "<group>"; };
 		AB95D24F172EF16700898221 /* EmailerAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EmailerAppDelegate.m; sourceTree = "<group>"; };
-		AB95D251172EF16700898221 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
-		AB95D253172EF16700898221 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
-		AB95D255172EF16700898221 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		AB95D258172EF16700898221 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
 		AB95D25A172EF16700898221 /* EmailerViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EmailerViewController.h; sourceTree = "<group>"; };
 		AB95D25B172EF16700898221 /* EmailerViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EmailerViewController.m; sourceTree = "<group>"; };
@@ -159,9 +153,6 @@
 				ABC289EB173AB2D2001AE95A /* background.png */,
 				ABC289EC173AB2D2001AE95A /* icon.png */,
 				AB95D24D172EF16700898221 /* Emailer-Prefix.pch */,
-				AB95D251172EF16700898221 /* Default.png */,
-				AB95D253172EF16700898221 /* Default@2x.png */,
-				AB95D255172EF16700898221 /* Default-568h@2x.png */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -258,9 +249,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				AB95D24A172EF16700898221 /* InfoPlist.strings in Resources */,
-				AB95D252172EF16700898221 /* Default.png in Resources */,
-				AB95D254172EF16700898221 /* Default@2x.png in Resources */,
-				AB95D256172EF16700898221 /* Default-568h@2x.png in Resources */,
 				AB95D259172EF16700898221 /* MainStoryboard.storyboard in Resources */,
 				ABC289ED173AB2D2001AE95A /* background.png in Resources */,
 				ABC289EE173AB2D2001AE95A /* icon.png in Resources */,

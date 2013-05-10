@@ -15,3 +15,5 @@ profile
 DerivedData
 .idea/
 *.hmap
+Emailer.xcodeproj/project.xcworkspace/xcuserdata/
+Emailer.xcodeproj/xcuserdata/joegreen.xcuserdatad/xcdebugger/
