@@ -12,19 +12,34 @@
     @property (nonatomic) NSString * filePath;
     @property (nonatomic) NSString * directoryPath;
     @property (nonatomic) NSString * name;
-    @property (nonatomic) NSString * fileSize;
+    @property (nonatomic) NSString * fsize;
 @end
 
 @implementation FileInfo
 
--(FileInfo*)initFile:(NSString*)name inDirectory:(NSString*)dir withSize:(NSString*)size {
+-(FileInfo*)initFile:(NSString*)name inDirectory:(NSString*)dir withSize:(int)size {
     
     self = [super init];
     if(self) {
         self.name = name;
-        self.fileSize=size;
         self.directoryPath=dir;
         self.filePath=[NSString stringWithFormat:@"%@/%@", dir, name];
+        double dsize = size;
+        NSString *unit;
+        if(size>1000000) {
+            dsize/=1000000;
+            unit=@"mB";
+        }
+        else if(size>1000) {
+            dsize/=1000;
+            unit=@"kB";
+        }
+        else
+            unit=@"B";
+        
+        
+        
+        self.fsize = [NSString stringWithFormat:@"%.1f %@", dsize, unit];
     }
     return self;
 }

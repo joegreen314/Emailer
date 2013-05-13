@@ -13,8 +13,8 @@
 @property (readonly, nonatomic) NSString * filePath;
 @property (readonly, nonatomic) NSString * directoryPath;
 @property (readonly, nonatomic) NSString * name;
-@property (readonly, nonatomic) NSString * fileSize;
+@property (readonly, nonatomic) NSString * fsize;
 
--(id)initFile:(NSString*)name inDirectory:(NSString*)dir withSize:(NSString*)size;
+-(id)initFile:(NSString*)name inDirectory:(NSString*)dir withSize:(int)size;
 
 @end

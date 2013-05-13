@@ -128,7 +128,9 @@
     if (fileNames) {
         for(int index = 0; index<fileNames.count; index++) {
             NSString * fileName = [fileNames objectAtIndex:index];
-            FileInfo *file = [[FileInfo alloc]initFile:fileName inDirectory:documentsDirectory withSize:@" "];
+            NSString* path =[NSString stringWithFormat:@"%@/%@", documentsDirectory, fileName];
+            int size = [[fileMgr attributesOfItemAtPath: path error: NULL] fileSize];
+            FileInfo *file = [[FileInfo alloc]initFile:fileName inDirectory:documentsDirectory withSize:size];
             [self.files addObject:file];
         }
     }
@@ -150,8 +152,11 @@
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
-    cell.textLabel.text = [[self.fileArray objectAtIndex:indexPath.row] name];
+    NSString *fname = [[self.fileArray objectAtIndex:indexPath.row] name];
+    NSString *size = [[self.fileArray objectAtIndex:indexPath.row] fsize];
     
+    cell.textLabel.text = [NSString stringWithFormat:@"%@ (%@)",fname,size];
+    //cell.textLabel.text = [[self.fileArray objectAtIndex:indexPath.row] name];
     return cell;
 }
 
