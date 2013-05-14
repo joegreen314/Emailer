@@ -22,6 +22,7 @@
 		AB95D271172EF16800898221 /* EmailerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = AB95D270172EF16800898221 /* EmailerTests.m */; };
 		AB9866B11731797700300AED /* FileInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = AB9866B01731797700300AED /* FileInfo.m */; };
 		ABB52FEB1742810000DAAC54 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABB52FEA1742810000DAAC54 /* CFNetwork.framework */; };
+		ABB52FFB1742962500DAAC54 /* FTPController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABB52FFA1742962500DAAC54 /* FTPController.m */; };
 		ABC289E417331154001AE95A /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC289E317331154001AE95A /* SettingsViewController.m */; };
 		ABC289EA173316B1001AE95A /* MailFields.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC289E9173316B1001AE95A /* MailFields.m */; };
 		ABC289ED173AB2D2001AE95A /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = ABC289EB173AB2D2001AE95A /* background.png */; };
@@ -62,6 +63,8 @@
 		AB9866AF1731797700300AED /* FileInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileInfo.h; sourceTree = "<group>"; };
 		AB9866B01731797700300AED /* FileInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileInfo.m; sourceTree = "<group>"; };
 		ABB52FEA1742810000DAAC54 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		ABB52FF91742962500DAAC54 /* FTPController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FTPController.h; sourceTree = "<group>"; };
+		ABB52FFA1742962500DAAC54 /* FTPController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FTPController.m; sourceTree = "<group>"; };
 		ABC289E217331154001AE95A /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
 		ABC289E317331154001AE95A /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		ABC289E8173316B1001AE95A /* MailFields.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MailFields.h; sourceTree = "<group>"; };
@@ -132,6 +135,8 @@
 		AB95D245172EF16700898221 /* Emailer */ = {
 			isa = PBXGroup;
 			children = (
+				ABB52FF91742962500DAAC54 /* FTPController.h */,
+				ABB52FFA1742962500DAAC54 /* FTPController.m */,
 				AB95D24E172EF16700898221 /* EmailerAppDelegate.h */,
 				AB95D24F172EF16700898221 /* EmailerAppDelegate.m */,
 				AB95D257172EF16700898221 /* MainStoryboard.storyboard */,
@@ -296,6 +301,7 @@
 				AB9866B11731797700300AED /* FileInfo.m in Sources */,
 				ABC289E417331154001AE95A /* SettingsViewController.m in Sources */,
 				ABC289EA173316B1001AE95A /* MailFields.m in Sources */,
+				ABB52FFB1742962500DAAC54 /* FTPController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

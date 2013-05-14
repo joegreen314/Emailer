@@ -28,7 +28,7 @@
         NSString *unit;
         if(size>1000000) {
             dsize/=1000000;
-            unit=@"mB";
+            unit=@"MB";
         }
         else if(size>1000) {
             dsize/=1000;
