@@ -47,22 +47,36 @@
     self.files=files;
     self.currFile=0;
     self.currDir=0; //Number of directories created so far
-    self.numDir=2; //Must create two directories
+    self.numDir=4; //Must create four directories
     [self createNewDir];
 }
 
 -(void)createNewDir{
-    switch (self.currDir){
+    switch (self.currDir){ //Format directories, then add them one at a time
         case 0:{
-            NSString* addr=@"ftp://jgreen:j0egr33n@fezzik.mandli.com/Digilog/Test/";
-            NSString *deviceName = [[UIDevice currentDevice]name];
-            self.path = [NSString stringWithFormat:@"%@%@/", addr, deviceName];
+            //ftp://jgreen:j0egr33n@fezzik.mandli.com/StatenameDOT/
+            //ftp://jgreen:j0egr33n@fezzik.mandli.com/Digilog/Test/
+            self.path = [NSString stringWithFormat:@"ftp://%@:%@@%@/%@/",
+                         [[MailFields defaultFields] user],
+                         [[MailFields defaultFields] pass],
+                         [[[MailFields defaultFields] url] objectAtIndex:0],
+                         [[[MailFields defaultFields] url] objectAtIndex:1]];
             NSLog(@"RUNNING CASE 0");
         } break;
         case 1:{
+            self.path = [NSString stringWithFormat:@"%@%@/", self.path,
+                         [[[MailFields defaultFields] url] objectAtIndex:2]];
+            NSLog(@"RUNNING CASE 1");
+        } break;
+        case 2:{
+            NSString *deviceName = [[UIDevice currentDevice]name];
+            self.path = [NSString stringWithFormat:@"%@%@/", self.path, deviceName];
+            NSLog(@"RUNNING CASE 2");
+        } break;
+        case 3:{
             NSString *date = [self getDate];
             self.path = [NSString stringWithFormat:@"%@%@/", self.path, date];
-            NSLog(@"RUNNING CASE 1");
+            NSLog(@"RUNNING CASE 3");
         } break;
     }
     self.currDir++;
@@ -170,6 +184,7 @@
             [self stopSendWithStatus:@"Stream open error"];
         } break;
         case NSStreamEventEndEncountered: {
+            //This case runs when we are creating a directory
             [self stopSendWithStatus:nil];
         } break;
         default: {

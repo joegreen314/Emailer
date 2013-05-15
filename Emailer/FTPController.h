@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "FileInfo.h"
+#import "MailFields.h"
 
 @protocol FTPControllerDelegate <NSObject>
 

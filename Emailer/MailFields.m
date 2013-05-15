@@ -10,6 +10,7 @@
 
 @interface MailFields()
 @property (strong) NSMutableArray* mutRecipients;
+@property (strong) NSMutableArray* mutUrl;
 @end
 
 @implementation MailFields
@@ -20,7 +21,6 @@ NSUserDefaults *defaults;
 +(MailFields*)defaultFields {
     if(!_sharedMailFields) {
         _sharedMailFields=[[self alloc] init];
-        
     }
     return _sharedMailFields;
 }
@@ -40,6 +40,22 @@ NSUserDefaults *defaults;
     [defaults synchronize];
 }
 
++(void)setUrl:(NSMutableArray*)url{
+    _sharedMailFields.mutUrl = [url copy];
+    [defaults setObject:url forKey:@"url"];
+    [defaults synchronize];
+}
++(void)setUsername:(NSString*)user{
+    _sharedMailFields.user = user;
+    [defaults setObject:user forKey:@"user"];
+    [defaults synchronize];
+}
++(void)setPassword:(NSString*)pass{
+    _sharedMailFields.pass = pass;
+    [defaults setObject:pass forKey:@"pass"];
+    [defaults synchronize];
+    
+}
 
 +(id)alloc {
     _sharedMailFields = [super alloc];
@@ -51,16 +67,24 @@ NSUserDefaults *defaults;
     defaults = [NSUserDefaults standardUserDefaults];
     if(self = [super init]) {
         if([defaults objectForKey:@"subject"]==nil) {
-            self.mutRecipients = [[NSMutableArray alloc] init];
-            [self.mutRecipients addObject:@"jgreen@mandli.com"];
+            self.mutRecipients = [[NSMutableArray alloc] initWithObjects:@"jgreen@mandli.com",nil];
             self.subject = @"Error Report";
             self.body = @"Errors";
+            self.mutUrl = [[NSMutableArray alloc] initWithObjects:@"fezzik.mandli.com",@"StatenameDOT", @"Daily_Upload", nil];
+            NSLog(@"%@",self.mutUrl);
+            self.user=[defaults objectForKey:@"jgreen"];
+            self.pass=[defaults objectForKey:@"j0egr33n"];
         }
         else {
             self.subject=[defaults objectForKey:@"subject"];
             self.body=[defaults objectForKey:@"body"];
-            self.mutRecipients = [[NSMutableArray alloc] init];
-            self.mutRecipients=[[defaults objectForKey:@"recipients"] copy];
+            self.mutRecipients = [[NSMutableArray alloc] initWithArray:[defaults objectForKey:@"recipients"]];
+            //self.mutRecipients=[[defaults objectForKey:@"recipients"] copy];
+            self.mutUrl = [[NSMutableArray alloc] initWithArray:[defaults objectForKey:@"url"]];
+            self.user=[defaults objectForKey:@"user"];
+            self.pass=[defaults objectForKey:@"pass"];
+            
+            
         }
     }
     return self;
@@ -69,6 +93,10 @@ NSUserDefaults *defaults;
 -(NSArray*)recipients {
     NSArray *recipients = [_sharedMailFields.mutRecipients copy];
     return recipients;
+}
+-(NSArray*)url{
+    NSArray *url= [_sharedMailFields.mutUrl copy];
+    return url;
 }
 
 @end

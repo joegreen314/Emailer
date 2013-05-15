@@ -10,11 +10,19 @@
 #import "MailFields.h"
 
 @interface SettingsViewController ()
+
+@property (strong, nonatomic) IBOutletCollection(UITextField) NSArray *toFields;
 @property (weak, nonatomic) IBOutlet UITextField *subjectField;
 @property (weak, nonatomic) IBOutlet UITextView *bodyField;
+@property (weak, nonatomic) IBOutlet UITextField *urlField0;
+@property (weak, nonatomic) IBOutlet UITextField *urlField1;
+@property (weak, nonatomic) IBOutlet UITextField *urlField2;
+@property (weak, nonatomic) IBOutlet UITextField *usernameField;
+@property (weak, nonatomic) IBOutlet UITextField *passwordField;
+
+
 @property (weak, nonatomic) IBOutlet UIToolbar *saveButton;
 @property (strong, nonatomic) UIPopoverController *popover;
-@property (strong, nonatomic) IBOutletCollection(UITextField) NSArray *toFields;
 
 @end
 
@@ -41,9 +49,14 @@
             index++;
         }
     }
-    //self.toField.text=[[MailFields defaultFields] recipients][0];
     self.subjectField.text=[[MailFields defaultFields] subject];
     self.bodyField.text=[[MailFields defaultFields] body];
+    self.urlField0.text=[[[MailFields defaultFields] url] objectAtIndex:0];
+    self.urlField1.text=[[[MailFields defaultFields] url] objectAtIndex:1];
+    self.urlField2.text=[[[MailFields defaultFields] url] objectAtIndex:2];
+    
+    
+    
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
@@ -58,7 +71,10 @@
         [recipientFields addObject:field.text];
     }
     [MailFields setRecipients:recipientFields];
-    //[MailFields setRecipients:self.toField.text];
+    NSMutableArray *urlFields = [[NSMutableArray alloc]initWithObjects:self.urlField0.text,self.urlField1.text,self.urlField2.text, nil];
+    [MailFields setUrl:urlFields];
+    [MailFields setUsername:self.usernameField.text];
+    [MailFields setPassword:self.passwordField.text];
     
     [delegate dismissPop];
 }
@@ -80,13 +96,18 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
-    return 1;
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return 3;
+    if(section==0){
+        return 3;
+    }
+    else{
+        return 2;
+    }
 }
 
 
@@ -96,7 +117,7 @@
 {
     // Navigation logic may go here. Create and push another view controller.
     /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
+     DetailViewController *detailViewController = [[DetailViewController alloc] initWithNibName:@"Nib name" bundle:nil];
      // ...
      // Pass the selected object to the new view controller.
      [self.navigationController pushViewController:detailViewController animated:YES];
@@ -108,6 +129,11 @@
     [self setBodyField:nil];
     [self setSaveButton:nil];
     [self setToFields:nil];
+    [self setUrlField0:nil];
+    [self setUrlField1:nil];
+    [self setUrlField2:nil];
+    [self setUsernameField:nil];
+    [self setPasswordField:nil];
     [super viewDidUnload];
 }
 @end
