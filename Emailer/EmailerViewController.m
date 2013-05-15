@@ -86,7 +86,6 @@ FTPController *fileSender;
 }
 
 - (IBAction)settingsButton:(id)sender {
-    [self disableButtons];
 }
 
 - (IBAction)ftpButton:(UIButton *)sender {
@@ -104,7 +103,6 @@ FTPController *fileSender;
 -(void)finishFTPTransfer{
     NSLog(@"FTP transfer complete");
     [self sendMailwithFiles:NO];
-    [self deleteFiles];
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
@@ -117,8 +115,8 @@ FTPController *fileSender;
 
 -(void)dismissPop{
     [[currentPopoverSegue popoverController] dismissPopoverAnimated:YES];
-    [self enableButtons];
 }
+
 
 -(void) sendMailwithFiles:(BOOL) includeAttachments {
     if([MFMailComposeViewController canSendMail]) {
@@ -135,6 +133,14 @@ FTPController *fileSender;
                 NSData *data = [NSData dataWithContentsOfFile:path];
                 [mailer addAttachmentData:data mimeType:@"error/zip" fileName:file.name];
             }
+        }
+        else{
+            NSString *filesSent=@"";
+            for(FileInfo *file in self.files){
+                filesSent = [NSString stringWithFormat:@"%@<br />%@",filesSent,[file name]];
+            }
+            NSString *body=[NSString stringWithFormat:@"%@<br /><br />FilesSent:%@", [[MailFields defaultFields] body],filesSent];
+            [mailer setMessageBody:body isHTML:YES];
         }
         
         [self presentViewController:mailer animated:YES completion:nil];

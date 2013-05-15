@@ -72,8 +72,8 @@ NSUserDefaults *defaults;
             self.body = @"Errors";
             self.mutUrl = [[NSMutableArray alloc] initWithObjects:@"fezzik.mandli.com",@"StatenameDOT", @"Daily_Upload", nil];
             NSLog(@"%@",self.mutUrl);
-            self.user=[defaults objectForKey:@"jgreen"];
-            self.pass=[defaults objectForKey:@"j0egr33n"];
+            self.user=@"jgreen";
+            self.pass=@"j0egr33n";
         }
         else {
             self.subject=[defaults objectForKey:@"subject"];
