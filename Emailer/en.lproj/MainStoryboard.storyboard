@@ -18,9 +18,9 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Iyr-7U-hU7">
-                                <rect key="frame" x="158" y="234" width="375" height="71"/>
+                                <rect key="frame" x="42" y="221" width="552" height="81"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="34"/>
-                                <state key="normal" title="Send Report">
+                                <state key="normal" title="Email Report">
                                     <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -28,11 +28,11 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="openMail:" destination="2" eventType="touchUpInside" id="Hbw-dl-my9"/>
+                                    <action selector="emailButton:" destination="2" eventType="touchUpInside" id="x1w-qd-qfY"/>
                                 </connections>
                             </button>
                             <tableView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="a4W-kr-eI4">
-                                <rect key="frame" x="42" y="312" width="685" height="436"/>
+                                <rect key="frame" x="42" y="397" width="685" height="351"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
@@ -40,11 +40,11 @@
                                     <outlet property="delegate" destination="2" id="naL-MG-d8T"/>
                                 </connections>
                             </tableView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="ITh-FY-bKq">
-                                <rect key="frame" x="42" y="234" width="108" height="71"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" id="ITh-FY-bKq">
+                                <rect key="frame" x="602" y="309" width="125" height="81"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                <state key="normal" title="Refresh">
+                                <state key="normal" title="Refresh Files">
                                     <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -56,7 +56,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="uqq-64-ayd">
-                                <rect key="frame" x="657" y="234" width="70" height="71"/>
+                                <rect key="frame" x="0.0" y="0.0" width="92" height="37"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal" title="Settings">
@@ -66,12 +66,6 @@
                                 <state key="highlighted">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
-                                <connections>
-                                    <action selector="settingsButton:" destination="2" eventType="touchUpInside" id="ydQ-84-FTD"/>
-                                    <segue destination="X8n-LW-eVh" kind="popover" identifier="openSettings" popoverAnchorView="uqq-64-ayd" id="FnR-08-qDy">
-                                        <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
-                                    </segue>
-                                </connections>
                             </button>
                             <navigationBar contentMode="scaleToFill" id="Hlr-Ix-XCN">
                                 <rect key="frame" x="0.0" y="0.0" width="768" height="44"/>
@@ -81,7 +75,7 @@
                                 </items>
                             </navigationBar>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="HES-cX-3Lw">
-                                <rect key="frame" x="541" y="234" width="108" height="71"/>
+                                <rect key="frame" x="602" y="265" width="125" height="37"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal" title="Delete Files">
@@ -95,11 +89,30 @@
                                     <action selector="deleteButton:" destination="2" eventType="touchUpInside" id="ac9-UQ-3KQ"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="PZp-Km-isC">
-                                <rect key="frame" x="654" y="183" width="73" height="44"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="gJg-Oc-h01">
+                                <rect key="frame" x="602" y="221" width="125" height="37"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                <state key="normal" title="Button">
+                                <state key="normal" title="Mail Settings">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="deleteButton:" destination="2" eventType="touchUpInside" id="qWr-1w-FOA"/>
+                                    <action selector="settingsButton:" destination="2" eventType="touchUpInside" id="X7f-6E-n9x"/>
+                                    <segue destination="X8n-LW-eVh" kind="popover" identifier="openSettings" popoverAnchorView="gJg-Oc-h01" id="HyK-jB-Yju">
+                                        <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                                    </segue>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="PZp-Km-isC">
+                                <rect key="frame" x="42" y="309" width="552" height="81"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="34"/>
+                                <state key="normal" title="FTP Report">
                                     <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -116,6 +129,8 @@
                     <connections>
                         <outlet property="deleteFilesButton" destination="HES-cX-3Lw" id="VkA-P0-lZ5"/>
                         <outlet property="fileList" destination="a4W-kr-eI4" id="TKj-Ej-CTB"/>
+                        <outlet property="ftpButton" destination="PZp-Km-isC" id="enn-LW-yUQ"/>
+                        <outlet property="mailSettingsButton" destination="gJg-Oc-h01" id="eKr-Xi-IBc"/>
                         <outlet property="refreshButton" destination="ITh-FY-bKq" id="WUI-2C-jtQ"/>
                         <outlet property="sendEmailButton" destination="Iyr-7U-hU7" id="XGT-db-uRc"/>
                     </connections>

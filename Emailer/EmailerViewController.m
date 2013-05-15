@@ -15,12 +15,13 @@
 
 @interface EmailerViewController()
 <UITableViewDelegate, UITableViewDataSource, FTPControllerDelegate>
-
-@property (nonatomic) NSMutableArray *files;
+@property (weak, nonatomic) IBOutlet UIButton *ftpButton;
+@property (weak, nonatomic) IBOutlet UIButton *mailSettingsButton;
 @property (weak, nonatomic) IBOutlet UIButton *sendEmailButton;
 @property (weak, nonatomic) IBOutlet UIButton *refreshButton;
 @property (weak, nonatomic) IBOutlet UIButton *deleteFilesButton;
 
+@property (nonatomic) NSMutableArray *files;
 @property (nonatomic, assign) UITableView* tableView;
 @property (nonatomic, readwrite)  NSMutableArray *fileArray;
 
@@ -39,22 +40,44 @@ FTPController *fileSender;
     [self refreshFiles];
 }
 
-- (void)updateButtons {
+- (void)enableButtons {
     if([self files].count>0) {
         self.sendEmailButton.enabled = YES;
         self.sendEmailButton.alpha=1;
         self.deleteFilesButton.enabled = YES;
         self.deleteFilesButton.alpha=1;
+        self.ftpButton.enabled = YES;
+        self.ftpButton.alpha=1;
     }
     else {
         self.sendEmailButton.enabled = NO;
         self.sendEmailButton.alpha=.5;
         self.deleteFilesButton.enabled = NO;
         self.deleteFilesButton.alpha=.5;
+        self.ftpButton.enabled = NO;
+        self.ftpButton.alpha=.5;
     }
+    self.mailSettingsButton.enabled = YES;
+    self.mailSettingsButton.alpha=1;
+    self.refreshButton.enabled = YES;
+    self.refreshButton.alpha=1;
+}
+
+-(void)disableButtons {
+    self.sendEmailButton.enabled = NO;
+    self.sendEmailButton.alpha=.5;
+    self.ftpButton.enabled = NO;
+    self.ftpButton.alpha=.5;
+    self.deleteFilesButton.enabled = NO;
+    self.deleteFilesButton.alpha=.5;
+    self.refreshButton.enabled = NO;
+    self.refreshButton.alpha=.5;
+    self.mailSettingsButton.enabled = NO;
+    self.mailSettingsButton.alpha=.5;
 }
 
 - (IBAction)refreshButton:(UIButton *)sender {
+    [self disableButtons];
     [self refreshFiles];
 }
 
@@ -63,17 +86,25 @@ FTPController *fileSender;
 }
 
 - (IBAction)settingsButton:(id)sender {
+    [self disableButtons];
 }
--(void)finishFTPTransfer{
-    NSLog(@"FTP transfer complete");
-}
-
 
 - (IBAction)ftpButton:(UIButton *)sender {
-    
+    [self disableButtons];
     fileSender = [[FTPController alloc]init];
     fileSender.delegate = self;
     [fileSender beginFTPTransfer:self.files];
+}
+
+- (IBAction)emailButton:(UIButton *)sender {
+    [self disableButtons];
+    [self sendMailwithFiles:YES];
+}
+
+-(void)finishFTPTransfer{
+    NSLog(@"FTP transfer complete");
+    [self sendMailwithFiles:NO];
+    [self deleteFiles];
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
@@ -83,13 +114,13 @@ FTPController *fileSender;
         [svc setDelegate:self];
     }
 }
+
 -(void)dismissPop{
     [[currentPopoverSegue popoverController] dismissPopoverAnimated:YES];
-    //dismiss the popover
+    [self enableButtons];
 }
 
-- (IBAction)openMail:(UIButton *)sender {
-    
+-(void) sendMailwithFiles:(BOOL) includeAttachments {
     if([MFMailComposeViewController canSendMail]) {
         
         MFMailComposeViewController *mailer = [[MFMailComposeViewController alloc] init];
@@ -98,19 +129,24 @@ FTPController *fileSender;
         [mailer setToRecipients:[MailFields defaultFields].recipients];
         [mailer setMessageBody:[[MailFields defaultFields] body] isHTML:YES];
         [mailer setCcRecipients:[[NSArray alloc] initWithObjects:@"Vehicle Technician Support <digilogsupport@mandli.com>", nil]];
-        
-        for(FileInfo *file in self.files) {
-            NSString *path = [NSString stringWithFormat:@"%@", file.filePath ];
-            NSData *data = [NSData dataWithContentsOfFile:path];
-            [mailer addAttachmentData:data mimeType:@"error/zip" fileName:file.name];
+        if(includeAttachments){
+            for(FileInfo *file in self.files) {
+                NSString *path = [NSString stringWithFormat:@"%@", file.filePath ];
+                NSData *data = [NSData dataWithContentsOfFile:path];
+                [mailer addAttachmentData:data mimeType:@"error/zip" fileName:file.name];
+            }
         }
         
         [self presentViewController:mailer animated:YES completion:nil];
     }
 }
+
 -(void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult: (MFMailComposeResult)result error: (NSError*)error {
     if(result==MFMailComposeResultSent){
         [self deleteFiles];
+    }
+    else {
+        [self refreshFiles];
     }
     [self dismissModalViewControllerAnimated:YES];
 }
@@ -126,7 +162,6 @@ FTPController *fileSender;
     }
     [self refreshFiles];
 }
-
 
 -(void)refreshFiles {
     [self.files removeAllObjects];
@@ -152,7 +187,7 @@ FTPController *fileSender;
     self.fileArray=[self.files copy];
     [self.tableView reloadData];
     [self.fileList reloadData];
-    [self updateButtons];
+    [self enableButtons];
 }
 
 - (NSInteger)tableView:(UITableView*)tableView numberOfRowsInSection:(NSInteger)section{
@@ -180,6 +215,8 @@ FTPController *fileSender;
     [self setRefreshButton:nil];
     [self setFileList:nil];
     [self setDeleteFilesButton:nil];
+    [self setFtpButton:nil];
+    [self setMailSettingsButton:nil];
     [super viewDidUnload];
 }
 @end
