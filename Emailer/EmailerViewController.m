@@ -3,7 +3,7 @@
 //  Emailer
 //
 //  Created by Joe Green on 4/17/13.
-//  Copyright (c) 2013 Digilog. All rights reserved.
+//  Copyright (c) 2013 Digilog. All rights reserved. hhkkjhjk
 // test test test
 
 #import "EmailerViewController.h"
