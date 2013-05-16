@@ -55,7 +55,6 @@
     switch (self.currDir){ //Format directories, then add them one at a time
         case 0:{
             //ftp://jgreen:j0egr33n@fezzik.mandli.com/StatenameDOT/
-            //ftp://jgreen:j0egr33n@fezzik.mandli.com/Digilog/Test/
             self.path = [NSString stringWithFormat:@"ftp://%@:%@@%@/%@/",
                          [[MailFields defaultFields] user],
                          [[MailFields defaultFields] pass],
@@ -74,7 +73,7 @@
             NSLog(@"RUNNING CASE 2");
         } break;
         case 3:{
-            NSString *date = [self getDate];
+            NSString *date = [FTPController getDate];
             self.path = [NSString stringWithFormat:@"%@%@/", self.path, date];
             NSLog(@"RUNNING CASE 3");
         } break;
@@ -98,7 +97,7 @@
     [delegate performSelector:@selector(finishFTPTransfer)];
 }
 
--(NSString*)getDate{
++(NSString*)getDate{
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     formatter.dateFormat = @"yyyy_MM_dd";
     NSString *result = [formatter stringFromDate:[NSDate date]];

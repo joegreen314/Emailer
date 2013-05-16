@@ -7,6 +7,7 @@
 //
 
 #import "FileInfo.h"
+#import "MailFields.h"
 
 @interface FileInfo()
     @property (nonatomic) NSString * filePath;
@@ -21,7 +22,7 @@
     
     self = [super init];
     if(self) {
-        self.name = name;
+        self.name = [MailFields sanitize:name];
         self.directoryPath=dir;
         self.filePath=[NSString stringWithFormat:@"%@/%@", dir, name];
         double dsize = size;

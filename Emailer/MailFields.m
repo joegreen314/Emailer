@@ -57,6 +57,15 @@ NSUserDefaults *defaults;
     
 }
 
++(NSString*)sanitize:(NSString*)string{
+    NSString *allowedchars = @"0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz_-.";
+    
+    NSCharacterSet *charactersToRemove=[[NSCharacterSet characterSetWithCharactersInString:allowedchars] invertedSet ];
+    
+    return [[string componentsSeparatedByCharactersInSet:charactersToRemove ]
+            componentsJoinedByString:@"_"];
+}
+
 +(id)alloc {
     _sharedMailFields = [super alloc];
     return _sharedMailFields;

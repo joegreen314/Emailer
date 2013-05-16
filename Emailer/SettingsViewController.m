@@ -64,20 +64,25 @@
     self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 - (IBAction)saveSettings:(UIBarButtonItem *)sender {
-    [MailFields setSubject:self.subjectField.text];
-    [MailFields setBody:self.bodyField.text];
+    [MailFields setSubject:[MailFields sanitize:self.subjectField.text]];
+    [MailFields setBody:[MailFields sanitize:self.bodyField.text]];
     NSMutableArray *recipientFields = [[NSMutableArray alloc]init];
     for(UITextField *field in self.toFields) {
-        [recipientFields addObject:field.text];
+        [recipientFields addObject:[MailFields sanitize:field.text]];
     }
     [MailFields setRecipients:recipientFields];
-    NSMutableArray *urlFields = [[NSMutableArray alloc]initWithObjects:self.urlField0.text,self.urlField1.text,self.urlField2.text, nil];
+    NSMutableArray *urlFields = [[NSMutableArray alloc]initWithObjects:
+                                 self.urlField0.text,
+                                 [MailFields sanitize:self.urlField1.text],
+                                 [MailFields sanitize:self.urlField2.text], nil];
     [MailFields setUrl:urlFields];
     [MailFields setUsername:self.usernameField.text];
     [MailFields setPassword:self.passwordField.text];
     
     [delegate dismissPop];
 }
+
+
 
 - (IBAction)cancelButton:(id)sender {
     [delegate dismissPop];

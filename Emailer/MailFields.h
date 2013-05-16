@@ -18,6 +18,8 @@
 +(void)setUsername:(NSString*)user;
 +(void)setPassword:(NSString*)pass;
 
++(NSString*)sanitize:(NSString*)string;
+
 @property (nonatomic,strong) NSArray *recipients;
 @property (nonatomic,strong) NSString *subject;
 @property (nonatomic,strong) NSString *body;

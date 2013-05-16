@@ -24,6 +24,7 @@
 @property (nonatomic) NSMutableArray *files;
 @property (nonatomic, assign) UITableView* tableView;
 @property (nonatomic, readwrite)  NSMutableArray *fileArray;
+@property (nonatomic) IBOutlet UIActivityIndicatorView *spinner;
 
 
 @end
@@ -37,6 +38,8 @@ FTPController *fileSender;
 
 - (void)viewDidLoad
 {
+    self.spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    [self.view addSubview:self.spinner]; 
     [self refreshFiles];
 }
 
@@ -61,6 +64,7 @@ FTPController *fileSender;
     self.mailSettingsButton.alpha=1;
     self.refreshButton.enabled = YES;
     self.refreshButton.alpha=1;
+    [self.spinner stopAnimating];
 }
 
 -(void)disableButtons {
@@ -74,6 +78,7 @@ FTPController *fileSender;
     self.refreshButton.alpha=.5;
     self.mailSettingsButton.enabled = NO;
     self.mailSettingsButton.alpha=.5;
+    [self.spinner startAnimating];
 }
 
 - (IBAction)refreshButton:(UIButton *)sender {
@@ -223,6 +228,7 @@ FTPController *fileSender;
     [self setDeleteFilesButton:nil];
     [self setFtpButton:nil];
     [self setMailSettingsButton:nil];
+    [self setSpinner:nil];
     [super viewDidUnload];
 }
 @end
