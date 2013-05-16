@@ -26,6 +26,9 @@
 @property (nonatomic, readwrite)  NSMutableArray *fileArray;
 @property (nonatomic) IBOutlet UIActivityIndicatorView *spinner;
 
+@property (weak, nonatomic) IBOutlet UILabel *statusLabel;
+
+
 
 @end
 
@@ -39,7 +42,9 @@ FTPController *fileSender;
 - (void)viewDidLoad
 {
     self.spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-    [self.view addSubview:self.spinner]; 
+    [self.view addSubview:self.spinner];
+    
+    [MailFields defaultFields];
     [self refreshFiles];
 }
 
@@ -49,17 +54,27 @@ FTPController *fileSender;
         self.sendEmailButton.alpha=1;
         self.deleteFilesButton.enabled = YES;
         self.deleteFilesButton.alpha=1;
-        self.ftpButton.enabled = YES;
-        self.ftpButton.alpha=1;
+        
     }
     else {
         self.sendEmailButton.enabled = NO;
         self.sendEmailButton.alpha=.5;
         self.deleteFilesButton.enabled = NO;
         self.deleteFilesButton.alpha=.5;
+    }
+    if(![[MailFields defaultFields]ftp]){
+        self.ftpButton.enabled = NO;
+        self.ftpButton.alpha=0;
+    }
+    else if([self files].count>0){
+        self.ftpButton.enabled = YES;
+        self.ftpButton.alpha=1;
+    }
+    else{
         self.ftpButton.enabled = NO;
         self.ftpButton.alpha=.5;
     }
+    
     self.mailSettingsButton.enabled = YES;
     self.mailSettingsButton.alpha=1;
     self.refreshButton.enabled = YES;
@@ -70,8 +85,10 @@ FTPController *fileSender;
 -(void)disableButtons {
     self.sendEmailButton.enabled = NO;
     self.sendEmailButton.alpha=.5;
+    if([[MailFields defaultFields]ftp]){
     self.ftpButton.enabled = NO;
     self.ftpButton.alpha=.5;
+    }
     self.deleteFilesButton.enabled = NO;
     self.deleteFilesButton.alpha=.5;
     self.refreshButton.enabled = NO;
@@ -119,6 +136,7 @@ FTPController *fileSender;
 }
 
 -(void)dismissPop{
+    [self enableButtons];
     [[currentPopoverSegue popoverController] dismissPopoverAnimated:YES];
 }
 
@@ -229,6 +247,7 @@ FTPController *fileSender;
     [self setFtpButton:nil];
     [self setMailSettingsButton:nil];
     [self setSpinner:nil];
+    [self setStatusLabel:nil];
     [super viewDidUnload];
 }
 @end

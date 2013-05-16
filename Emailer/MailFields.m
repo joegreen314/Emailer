@@ -57,6 +57,12 @@ NSUserDefaults *defaults;
     
 }
 
++(void)setFtpStatus:(BOOL)ftpIsEnabled{
+    _sharedMailFields.ftp = ftpIsEnabled;
+    [defaults setBool:ftpIsEnabled forKey:@"ftp"];
+    [defaults synchronize];
+}
+
 +(NSString*)sanitize:(NSString*)string{
     NSString *allowedchars = @"0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz_-.";
     
@@ -75,14 +81,17 @@ NSUserDefaults *defaults;
     
     defaults = [NSUserDefaults standardUserDefaults];
     if(self = [super init]) {
-        if([defaults objectForKey:@"subject"]==nil) {
-            self.mutRecipients = [[NSMutableArray alloc] initWithObjects:@"jgreen@mandli.com",nil];
-            self.subject = @"Error Report";
-            self.body = @"Errors";
-            self.mutUrl = [[NSMutableArray alloc] initWithObjects:@"fezzik.mandli.com",@"StatenameDOT", @"Daily_Upload", nil];
-            NSLog(@"%@",self.mutUrl);
-            self.user=@"jgreen";
-            self.pass=@"j0egr33n";
+        if(![defaults boolForKey:@"loadSavedSettings"]) {
+            
+            [MailFields setSubject:@"Error Report"];
+            [MailFields setBody:@"Errors"];
+            [MailFields setUsername:@"jgreen"];
+            [MailFields setPassword:@"j0egr33n"];
+            [MailFields setUrl:[[NSMutableArray alloc] initWithObjects:@"fezzik.mandli.com",@"StatenameDOT", @"Daily_Upload", nil]];
+            [MailFields setFtpStatus:YES];
+            [MailFields setRecipients:[[NSMutableArray alloc] initWithObjects:@"jgreen@mandli.com",nil]];
+            [defaults setBool:YES forKey:@"loadSavedSettings"];
+            [defaults synchronize];
         }
         else {
             self.subject=[defaults objectForKey:@"subject"];
@@ -92,7 +101,7 @@ NSUserDefaults *defaults;
             self.mutUrl = [[NSMutableArray alloc] initWithArray:[defaults objectForKey:@"url"]];
             self.user=[defaults objectForKey:@"user"];
             self.pass=[defaults objectForKey:@"pass"];
-            
+            self.ftp=[defaults boolForKey:@"ftp"];
             
         }
     }

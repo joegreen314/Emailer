@@ -20,6 +20,8 @@
 @property (weak, nonatomic) IBOutlet UITextField *usernameField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordField;
 
+@property (weak, nonatomic) IBOutlet UISwitch *ftpSwitch;
+
 
 @property (weak, nonatomic) IBOutlet UIToolbar *saveButton;
 @property (strong, nonatomic) UIPopoverController *popover;
@@ -55,8 +57,11 @@
     self.urlField1.text=[[[MailFields defaultFields] url] objectAtIndex:1];
     self.urlField2.text=[[[MailFields defaultFields] url] objectAtIndex:2];
     
-    
-    
+    MailFields *test = [MailFields defaultFields];
+    if([test ftp]==NO){
+        [self.ftpSwitch setOn:NO];
+    //[self.ftpSwitch setOn:[[MailFields defaultFields] ftp]];
+    }
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
@@ -79,15 +84,17 @@
     [MailFields setUsername:self.usernameField.text];
     [MailFields setPassword:self.passwordField.text];
     
+    [MailFields setFtpStatus:self.ftpSwitch.on];
+    
     [delegate dismissPop];
 }
+
 
 
 
 - (IBAction)cancelButton:(id)sender {
     [delegate dismissPop];
 }
-
 
 
 - (void)didReceiveMemoryWarning
@@ -111,7 +118,7 @@
         return 3;
     }
     else{
-        return 2;
+        return 3;
     }
 }
 
@@ -139,6 +146,7 @@
     [self setUrlField2:nil];
     [self setUsernameField:nil];
     [self setPasswordField:nil];
+    [self setFtpSwitch:nil];
     [super viewDidUnload];
 }
 @end

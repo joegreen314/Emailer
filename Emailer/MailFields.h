@@ -17,6 +17,8 @@
 +(void)setUrl:(NSMutableArray*)url;
 +(void)setUsername:(NSString*)user;
 +(void)setPassword:(NSString*)pass;
++(void)setFtpStatus:(BOOL)ftpIsEnabled;
+
 
 +(NSString*)sanitize:(NSString*)string;
 
@@ -26,7 +28,7 @@
 @property (nonatomic,strong) NSMutableArray *url;
 @property (nonatomic,strong) NSString *user;
 @property (nonatomic,strong) NSString *pass;
-
+@property (nonatomic) BOOL ftp;
 
 
 @end
