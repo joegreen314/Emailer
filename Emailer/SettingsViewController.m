@@ -57,6 +57,8 @@
     self.urlField1.text=[[[MailFields defaultFields] url] objectAtIndex:1];
     self.urlField2.text=[[[MailFields defaultFields] url] objectAtIndex:2];
     
+    self.usernameField.text=[[MailFields defaultFields] user];
+    self.passwordField.text=[[MailFields defaultFields] pass];
     MailFields *test = [MailFields defaultFields];
     if([test ftp]==NO){
         [self.ftpSwitch setOn:NO];

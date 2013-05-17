@@ -61,9 +61,7 @@
     switch (self.currDir){ //Format directories, then add them one at a time
         case 0:{
             //ftp://jgreen:j0egr33n@fezzik.mandli.com/StatenameDOT/
-            self.path = [NSString stringWithFormat:@"ftp://%@:%@@%@/%@/",
-                         [[MailFields defaultFields] user],
-                         [[MailFields defaultFields] pass],
+            self.path = [NSString stringWithFormat:@"ftp://%@/%@/",
                          [[[MailFields defaultFields] url] objectAtIndex:0],
                          [[[MailFields defaultFields] url] objectAtIndex:1]];
             //NSLog(@"RUNNING CASE 0");
@@ -127,12 +125,12 @@
         return;
     }
     
-    //if ([self.usernameText.text length] != 0) {
-    //    success = [self.networkStream setProperty:self.usernameText.text forKey:(id)kCFStreamPropertyFTPUserName];
-    //    assert(success);
-    //    success = [self.networkStream setProperty:self.passwordText.text forKey:(id)kCFStreamPropertyFTPPassword];
-    //    assert(success);
-    //}
+    if ([[MailFields defaultFields] user] != 0) {
+        BOOL success = [self.writeStream setProperty:[[MailFields defaultFields] user] forKey:(id)kCFStreamPropertyFTPUserName];
+        assert(success);
+        success = [self.writeStream setProperty:[[MailFields defaultFields] pass] forKey:(id)kCFStreamPropertyFTPPassword];
+        assert(success);
+    }
     
     self.writeStream.delegate = self;
     [self.writeStream scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
@@ -151,13 +149,11 @@
     
     switch (eventCode) {
         case NSStreamEventOpenCompleted: {
-            //[self updateStatus:@"Opened connection"];
         } break;
         case NSStreamEventHasBytesAvailable: {
             assert(NO);     // should never happen for the output stream
         } break;
         case NSStreamEventHasSpaceAvailable: {
-            //[self updateStatus:@"Sending"];
             
             // If we don't have any data buffered, go read the next chunk of data.
             
@@ -167,7 +163,8 @@
                 bytesRead = [self.readStream read:self.buffer maxLength:32768];
                 
                 if (bytesRead == -1) {
-                    //[self stopSendWithStatus:@"File read error"];
+                    [self stopSendWithStatus:@"Transfer failed! File read error"];
+                    NSLog(@"1");
                 } else if (bytesRead == 0) {
                     [self stopSendWithStatus:nil];
                 } else {
@@ -183,14 +180,14 @@
                 bytesWritten = [self.writeStream write:&self.buffer[self.bufferOffset] maxLength:self.bufferLimit - self.bufferOffset];
                 assert(bytesWritten != 0);
                 if (bytesWritten == -1) {
-                    [self stopSendWithStatus:@"Network write error"];
+                    [self stopSendWithStatus:@"Transfer failed! Network write error"];
                 } else {
                     self.bufferOffset += bytesWritten;
                 }
             }
         } break;
         case NSStreamEventErrorOccurred: {
-            [self stopSendWithStatus:@"Stream open error"];
+            [self stopSendWithStatus:@"Transfer failed! Stream open error"];
         } break;
         case NSStreamEventEndEncountered: {
             //This case runs when we are creating a directory
@@ -204,6 +201,7 @@
 
 - (void)stopSendWithStatus:(NSString *)statusString
 {
+    self.status=statusString;
     if (self.writeStream != nil) {
         [self.writeStream removeFromRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
         self.writeStream.delegate = nil;
@@ -220,8 +218,7 @@
     else if(self.currFile<[self.files count]){
         [self sendNextFile];
     }
-    else{
-        self.status=statusString;
+    else {
         [self endFTPTransfer];
     }
     //[self sendDidStopWithStatus:statusString];
