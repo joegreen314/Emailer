@@ -24,6 +24,7 @@
 @property (nonatomic, assign, readonly ) uint8_t *         buffer;
 @property (nonatomic, assign, readwrite) size_t            bufferOffset;
 @property (nonatomic, assign, readwrite) size_t            bufferLimit;
+@property (nonatomic) NSString* status;
 @end
 
 @implementation FTPController
@@ -42,12 +43,17 @@
     return self;
 }
 
+-(NSString*)getStatus {
+    return self.status;
+}
+
 -(void)beginFTPTransfer:(NSMutableArray*)files {
-    
+    self.status=@"";
     self.files=files;
     self.currFile=0;
     self.currDir=0; //Number of directories created so far
     self.numDir=4; //Must create four directories
+    
     [self createNewDir];
 }
 
@@ -60,22 +66,22 @@
                          [[MailFields defaultFields] pass],
                          [[[MailFields defaultFields] url] objectAtIndex:0],
                          [[[MailFields defaultFields] url] objectAtIndex:1]];
-            NSLog(@"RUNNING CASE 0");
+            //NSLog(@"RUNNING CASE 0");
         } break;
         case 1:{
             self.path = [NSString stringWithFormat:@"%@%@/", self.path,
                          [[[MailFields defaultFields] url] objectAtIndex:2]];
-            NSLog(@"RUNNING CASE 1");
+            //NSLog(@"RUNNING CASE 1");
         } break;
         case 2:{
             NSString *deviceName = [[UIDevice currentDevice]name];
             self.path = [NSString stringWithFormat:@"%@%@/", self.path, deviceName];
-            NSLog(@"RUNNING CASE 2");
+            //NSLog(@"RUNNING CASE 2");
         } break;
         case 3:{
             NSString *date = [FTPController getDate];
             self.path = [NSString stringWithFormat:@"%@%@/", self.path, date];
-            NSLog(@"RUNNING CASE 3");
+            //NSLog(@"RUNNING CASE 3");
         } break;
     }
     self.currDir++;
@@ -115,7 +121,11 @@
     self.writeStream = CFBridgingRelease(
                                          CFWriteStreamCreateWithFTPURL(NULL, (__bridge CFURLRef) url)
                                          );
-    assert(self.writeStream != nil);
+    if(self.writeStream == nil){
+        self.status=@"Transfer failed! Bad URL";
+        [self endFTPTransfer];
+        return;
+    }
     
     //if ([self.usernameText.text length] != 0) {
     //    success = [self.networkStream setProperty:self.usernameText.text forKey:(id)kCFStreamPropertyFTPUserName];
@@ -210,8 +220,10 @@
     else if(self.currFile<[self.files count]){
         [self sendNextFile];
     }
-    else
+    else{
+        self.status=statusString;
         [self endFTPTransfer];
+    }
     //[self sendDidStopWithStatus:statusString];
 }
 

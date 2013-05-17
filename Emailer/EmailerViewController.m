@@ -24,7 +24,6 @@
 @property (nonatomic) NSMutableArray *files;
 @property (nonatomic, assign) UITableView* tableView;
 @property (nonatomic, readwrite)  NSMutableArray *fileArray;
-@property (nonatomic) IBOutlet UIActivityIndicatorView *spinner;
 @property (strong, nonatomic) NSString* status;
 
 @property (weak, nonatomic) IBOutlet UILabel *statusLabel;
@@ -42,8 +41,6 @@ FTPController *fileSender;
 
 - (void)viewDidLoad
 {
-    self.spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-    [self.view addSubview:self.spinner];
     [MailFields defaultFields];
     [self refreshFiles];
 }
@@ -79,13 +76,7 @@ FTPController *fileSender;
     self.mailSettingsButton.alpha=1;
     self.refreshButton.enabled = YES;
     self.refreshButton.alpha=1;
-    [self.spinner stopAnimating];
-    if(self.status){
-        self.statusLabel.text=[NSString stringWithFormat:@"Status: %@",self.status];
-    }
-    else{
-        self.statusLabel.text=@"";
-    }
+    self.statusLabel.text=self.status;
 }
 
 -(void)disableButtons {
@@ -100,9 +91,7 @@ FTPController *fileSender;
     self.refreshButton.enabled = NO;
     self.refreshButton.alpha=.5;
     self.mailSettingsButton.enabled = NO;
-    self.mailSettingsButton.alpha=.5;
-    [self.spinner startAnimating];
-}
+    self.mailSettingsButton.alpha=.5;}
 
 - (IBAction)refreshButton:(UIButton *)sender {
     [self disableButtons];
@@ -111,6 +100,7 @@ FTPController *fileSender;
 
 - (IBAction)deleteButton:(id)sender {
     [self deleteFiles];
+    [self updateStatus:@"Files deleted" withError:NO];
 }
 
 - (IBAction)settingsButton:(id)sender {
@@ -121,6 +111,7 @@ FTPController *fileSender;
     fileSender = [[FTPController alloc]init];
     fileSender.delegate = self;
     [fileSender beginFTPTransfer:self.files];
+    
 }
 
 - (IBAction)emailButton:(UIButton *)sender {
@@ -128,11 +119,35 @@ FTPController *fileSender;
     [self sendMailwithFiles:YES];
 }
 
+-(void)updateStatus:(NSString*)status withError:(BOOL)Error{
+    if(Error){
+        self.status=[NSString stringWithFormat:@"Error: %@",status];
+    }
+    else{
+        self.status=[NSString stringWithFormat:@"Status: %@",status];
+    }
+    NSLog(@"%@",self.status);
+}
 
 -(void)finishFTPTransfer{
-    NSLog(@"FTP transfer complete");
-    self.status=@"FTP Transfer complete";
-    [self sendMailwithFiles:NO];
+    if([fileSender getStatus]){
+        [self updateStatus:[fileSender getStatus] withError:YES];
+        [self refreshFiles];
+    }
+    else{
+        NSNumber *fileCount = [NSNumber numberWithLong:(unsigned long)[self.files count]];
+        NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
+        [numberFormatter setNumberStyle:NSNumberFormatterSpellOutStyle];
+        NSString *strFileCount = [[numberFormatter stringFromNumber:fileCount] capitalizedString];
+        
+        if([self.files count]==1){
+            [self updateStatus:[NSString stringWithFormat:@"Success! %@ file sent via FTP.",strFileCount]withError:NO];
+        }
+        else
+            [self updateStatus:[NSString stringWithFormat:@"Success! %@ files sent via FTP.",strFileCount]withError:NO];
+        
+        [self sendMailwithFiles:NO];
+    }
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
@@ -180,7 +195,6 @@ FTPController *fileSender;
 
 -(void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult: (MFMailComposeResult)result error: (NSError*)error {
     if(result==MFMailComposeResultSent){
-        self.status=[NSString stringWithFormat:@"%lu file(s) sent.",(unsigned long)[self.files count]];
         [self deleteFiles];
     }
     else {
@@ -255,7 +269,6 @@ FTPController *fileSender;
     [self setDeleteFilesButton:nil];
     [self setFtpButton:nil];
     [self setMailSettingsButton:nil];
-    [self setSpinner:nil];
     [self setStatusLabel:nil];
     [super viewDidUnload];
 }

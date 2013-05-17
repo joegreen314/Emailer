@@ -21,6 +21,7 @@
 }
 -(id)init;
 -(void)sendTo:(NSString *)destPath from:(NSString *)devicePath;
+-(NSString*)getStatus;
 
 @property (nonatomic) id<FTPControllerDelegate> delegate;
 
