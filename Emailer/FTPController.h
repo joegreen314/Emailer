@@ -24,6 +24,7 @@
 -(NSString*)getStatus;
 
 @property (nonatomic) id<FTPControllerDelegate> delegate;
+@property (nonatomic) NSString* fullPath;
 
 -(void)beginFTPTransfer:(NSMutableArray*)files;
 

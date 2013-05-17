@@ -13,6 +13,7 @@
 
 @interface EmailerViewController : UIViewController <MFMailComposeViewControllerDelegate,UITableViewDelegate,UITableViewDataSource, SettingsViewControllerDelegate, UIPopoverControllerDelegate, NSStreamDelegate>
 
+
 @property (strong, nonatomic) IBOutlet UITableView *fileList;
 @property (nonatomic, readonly) NSMutableArray *fileArray;
 

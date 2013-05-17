@@ -25,6 +25,8 @@
 @property (nonatomic, assign) UITableView* tableView;
 @property (nonatomic, readwrite)  NSMutableArray *fileArray;
 @property (strong, nonatomic) NSString* status;
+@property (nonatomic) BOOL ftpFlag;
+@property (nonatomic) NSString* ftpDir;
 
 @property (weak, nonatomic) IBOutlet UILabel *statusLabel;
 
@@ -96,11 +98,13 @@ FTPController *fileSender;
 - (IBAction)refreshButton:(UIButton *)sender {
     [self disableButtons];
     [self refreshFiles];
+    [self updateStatus:[NSString stringWithFormat:@"%@ found.",[self getNumFiles]] withError:NO];
+    [self enableButtons];
 }
 
 - (IBAction)deleteButton:(id)sender {
+    [self updateStatus:[NSString stringWithFormat:@"%@ deleted.",[self getNumFiles]] withError:NO];
     [self deleteFiles];
-    [self updateStatus:@"Files deleted" withError:NO];
 }
 
 - (IBAction)settingsButton:(id)sender {
@@ -121,34 +125,49 @@ FTPController *fileSender;
 
 -(void)updateStatus:(NSString*)status withError:(BOOL)Error{
     if(Error){
-        self.status=[NSString stringWithFormat:@"Error: %@",status];
+        self.status=[NSString stringWithFormat:@"%@ Error: %@",[EmailerViewController getTime], status];
     }
     else{
-        self.status=[NSString stringWithFormat:@"Status: %@",status];
+        self.status=[NSString stringWithFormat:@"%@ : %@",[EmailerViewController getTime], status];
     }
     NSLog(@"%@",self.status);
 }
 
++(NSString*)getTime{
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    formatter.dateFormat = @"h:mm a";
+    NSString *result = [formatter stringFromDate:[NSDate date]];
+    return result;
+}
+
 -(void)finishFTPTransfer{
+    self.ftpDir=[fileSender.fullPath copy];
     if([fileSender getStatus]){
         [self updateStatus:[fileSender getStatus] withError:YES];
         [self refreshFiles];
     }
     else{
-        NSNumber *fileCount = [NSNumber numberWithLong:(unsigned long)[self.files count]];
-        NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
-        [numberFormatter setNumberStyle:NSNumberFormatterSpellOutStyle];
-        NSString *strFileCount = [[numberFormatter stringFromNumber:fileCount] capitalizedString];
-        
-        if([self.files count]==1){
-            [self updateStatus:[NSString stringWithFormat:@"Success! %@ file sent via FTP.",strFileCount]withError:NO];
-        }
-        else
-            [self updateStatus:[NSString stringWithFormat:@"Success! %@ files sent via FTP.",strFileCount]withError:NO];
-        
+        [self updateStatus:[NSString stringWithFormat:@"Success! %@ sent via FTP.",[self getNumFiles]]withError:NO];
         [self sendMailwithFiles:NO];
     }
 }
+-(NSString*)getNumFiles{
+    
+    NSNumber *fileCount = [NSNumber numberWithLong:(unsigned long)[self.files count]];
+    NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
+    [numberFormatter setNumberStyle:NSNumberFormatterSpellOutStyle];
+    NSString *strFileCount = [[numberFormatter stringFromNumber:fileCount] capitalizedString];
+    if([strFileCount isEqualToString:(@"Zero")])
+        strFileCount=@"No";
+    
+    NSString *numFiles;
+    if([self.files count]==1)
+        numFiles =[NSString stringWithFormat:@"%@ file",strFileCount];
+    else
+        numFiles =[NSString stringWithFormat:@"%@ files",strFileCount];
+    return numFiles;
+}
+
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if([[segue identifier]isEqualToString:@"openSettings"]){
@@ -174,6 +193,7 @@ FTPController *fileSender;
         [mailer setMessageBody:[[MailFields defaultFields] body] isHTML:YES];
         [mailer setCcRecipients:[[NSArray alloc] initWithObjects:@"Vehicle Technician Support <digilogsupport@mandli.com>", nil]];
         if(includeAttachments){
+            
             for(FileInfo *file in self.files) {
                 NSString *path = [NSString stringWithFormat:@"%@", file.filePath ];
                 NSData *data = [NSData dataWithContentsOfFile:path];
@@ -185,8 +205,10 @@ FTPController *fileSender;
             for(FileInfo *file in self.files){
                 filesSent = [NSString stringWithFormat:@"%@<br />%@",filesSent,[file name]];
             }
-            NSString *body=[NSString stringWithFormat:@"%@<br /><br />FilesSent:%@", [[MailFields defaultFields] body],filesSent];
+            NSString *body=[NSString stringWithFormat:@"%@<br />Directory: %@<br />FilesSent:%@", [[MailFields defaultFields] body],self.ftpDir,filesSent];
             [mailer setMessageBody:body isHTML:YES];
+            self.ftpFlag=YES;
+            
         }
         
         [self presentViewController:mailer animated:YES completion:nil];
@@ -195,10 +217,24 @@ FTPController *fileSender;
 
 -(void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult: (MFMailComposeResult)result error: (NSError*)error {
     if(result==MFMailComposeResultSent){
+        if(!self.ftpFlag)
+            [self updateStatus:[NSString stringWithFormat:@"Message sent to outbox.  %@ deleted.", [self getNumFiles]] withError:NO];
         [self deleteFiles];
     }
-    else {
-        [self refreshFiles];
+    else if(result==MFMailComposeResultCancelled){
+        if(!self.ftpFlag)
+            [self updateStatus:@"Message cancelled." withError:NO];
+        [self enableButtons];
+    }
+    else if(result==MFMailComposeResultSaved){
+        if(!self.ftpFlag)
+            [self updateStatus:@"Message saved." withError:NO];
+        [self enableButtons];
+    }
+    else if(result==MFMailComposeResultFailed){
+        if(!self.ftpFlag)
+            [self updateStatus:@"Message failed." withError:NO];
+        [self enableButtons];
     }
     [self dismissModalViewControllerAnimated:YES];
 }
@@ -260,7 +296,14 @@ FTPController *fileSender;
     //cell.textLabel.text = [[self.fileArray objectAtIndex:indexPath.row] name];
     return cell;
 }
-
+- (BOOL)ShouldAutoRotate
+{
+    return NO;
+}
+- (NSUInteger)supportedInterfaceOrientations
+{
+    return UIInterfaceOrientationMaskPortrait;
+}
 - (void)viewDidUnload {
     [self setSendEmailButton:nil];
     [self setFileArray:nil];

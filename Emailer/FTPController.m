@@ -25,6 +25,7 @@
 @property (nonatomic, assign, readwrite) size_t            bufferOffset;
 @property (nonatomic, assign, readwrite) size_t            bufferLimit;
 @property (nonatomic) NSString* status;
+
 @end
 
 @implementation FTPController
@@ -79,6 +80,7 @@
         case 3:{
             NSString *date = [FTPController getDate];
             self.path = [NSString stringWithFormat:@"%@%@/", self.path, date];
+            self.fullPath=[self.path copy];
             //NSLog(@"RUNNING CASE 3");
         } break;
     }

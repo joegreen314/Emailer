@@ -71,11 +71,11 @@
     self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 - (IBAction)saveSettings:(UIBarButtonItem *)sender {
-    [MailFields setSubject:[MailFields sanitize:self.subjectField.text]];
-    [MailFields setBody:[MailFields sanitize:self.bodyField.text]];
+    [MailFields setSubject:self.subjectField.text];
+    [MailFields setBody:self.bodyField.text];
     NSMutableArray *recipientFields = [[NSMutableArray alloc]init];
     for(UITextField *field in self.toFields) {
-        [recipientFields addObject:[MailFields sanitize:field.text]];
+        [recipientFields addObject:field.text];
     }
     [MailFields setRecipients:recipientFields];
     NSMutableArray *urlFields = [[NSMutableArray alloc]initWithObjects:

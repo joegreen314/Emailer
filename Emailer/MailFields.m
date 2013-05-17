@@ -82,9 +82,12 @@ NSUserDefaults *defaults;
     defaults = [NSUserDefaults standardUserDefaults];
     if(self = [super init]) {
         if(![defaults boolForKey:@"loadSavedSettings"]) {
-            
-            [MailFields setSubject:@"Error Report"];
-            [MailFields setBody:@"Errors"];
+            [MailFields setSubject:[NSString stringWithFormat:
+                                    @"%@ Collection Report",
+                                    [[UIDevice currentDevice]name]]];
+            [MailFields setBody:[NSString stringWithFormat:
+                                 @"%@ Collection Report",
+                                 [[UIDevice currentDevice]name]]];
             [MailFields setUsername:@"jgreen"];
             [MailFields setPassword:@"j0egr33n"];
             [MailFields setUrl:[[NSMutableArray alloc] initWithObjects:@"fezzik.mandli.com",@"StatenameDOT", @"Daily_Upload", nil]];
