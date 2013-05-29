@@ -136,9 +136,11 @@ FTPController *fileSender;
     UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
     NSData *imageData = UIImagePNGRepresentation(image);
     NSString *documentsDirectory = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"];
-    NSString *filePath = [documentsDirectory stringByAppendingPathComponent:[self getUniqueImageName]];
+    NSString *imageName = [self getUniqueImageName];
+    NSString *filePath = [documentsDirectory stringByAppendingPathComponent:imageName];
     [imageData writeToFile:filePath atomically:YES];
     [self dismissViewControllerAnimated:YES completion:nil];
+    [self updateStatus:[NSString stringWithFormat:@"Created %@", imageName] withError:NO];
     [self refreshFiles];
 }
 
@@ -345,7 +347,6 @@ FTPController *fileSender;
     [self setFileList:nil];
     [self setDeleteFilesButton:nil];
     [self setFtpButton:nil];
-    [self setMailSettingsButton:nil];
     [self setStatusLabel:nil];
     [self setMailSettingsButton:nil];
     [super viewDidUnload];
