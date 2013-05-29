@@ -21,6 +21,8 @@
 		AB95D26E172EF16800898221 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = AB95D26C172EF16800898221 /* InfoPlist.strings */; };
 		AB95D271172EF16800898221 /* EmailerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = AB95D270172EF16800898221 /* EmailerTests.m */; };
 		AB9866B11731797700300AED /* FileInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = AB9866B01731797700300AED /* FileInfo.m */; };
+		ABA74310175650830084B943 /* iPhone-Camera-icon.jpg in Resources */ = {isa = PBXBuildFile; fileRef = ABA7430F175650830084B943 /* iPhone-Camera-icon.jpg */; };
+		ABA74312175651270084B943 /* iphone-camera-icon-1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = ABA74311175651270084B943 /* iphone-camera-icon-1.jpg */; };
 		ABB52FEB1742810000DAAC54 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABB52FEA1742810000DAAC54 /* CFNetwork.framework */; };
 		ABB52FFB1742962500DAAC54 /* FTPController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABB52FFA1742962500DAAC54 /* FTPController.m */; };
 		ABC289E417331154001AE95A /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC289E317331154001AE95A /* SettingsViewController.m */; };
@@ -62,6 +64,8 @@
 		AB95D270172EF16800898221 /* EmailerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EmailerTests.m; sourceTree = "<group>"; };
 		AB9866AF1731797700300AED /* FileInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileInfo.h; sourceTree = "<group>"; };
 		AB9866B01731797700300AED /* FileInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileInfo.m; sourceTree = "<group>"; };
+		ABA7430F175650830084B943 /* iPhone-Camera-icon.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "iPhone-Camera-icon.jpg"; path = "../../../Downloads/iPhone-Camera-icon.jpg"; sourceTree = "<group>"; };
+		ABA74311175651270084B943 /* iphone-camera-icon-1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "iphone-camera-icon-1.jpg"; path = "../../../Downloads/iphone-camera-icon-1.jpg"; sourceTree = "<group>"; };
 		ABB52FEA1742810000DAAC54 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		ABB52FF91742962500DAAC54 /* FTPController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FTPController.h; sourceTree = "<group>"; };
 		ABB52FFA1742962500DAAC54 /* FTPController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FTPController.m; sourceTree = "<group>"; };
@@ -156,6 +160,8 @@
 		AB95D246172EF16700898221 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				ABA7430F175650830084B943 /* iPhone-Camera-icon.jpg */,
+				ABA74311175651270084B943 /* iphone-camera-icon-1.jpg */,
 				AB95D247172EF16700898221 /* Emailer-Info.plist */,
 				AB95D248172EF16700898221 /* InfoPlist.strings */,
 				AB95D24B172EF16700898221 /* main.m */,
@@ -261,6 +267,8 @@
 				AB95D259172EF16700898221 /* MainStoryboard.storyboard in Resources */,
 				ABC289ED173AB2D2001AE95A /* background.png in Resources */,
 				ABC289EE173AB2D2001AE95A /* icon.png in Resources */,
+				ABA74310175650830084B943 /* iPhone-Camera-icon.jpg in Resources */,
+				ABA74312175651270084B943 /* iphone-camera-icon-1.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

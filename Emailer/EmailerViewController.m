@@ -14,9 +14,9 @@
 #import "FTPController.h"
 
 @interface EmailerViewController()
-<UITableViewDelegate, UITableViewDataSource, FTPControllerDelegate>
+<FTPControllerDelegate>
 @property (weak, nonatomic) IBOutlet UIButton *ftpButton;
-@property (weak, nonatomic) IBOutlet UIButton *mailSettingsButton;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *mailSettingsButton;
 @property (weak, nonatomic) IBOutlet UIButton *sendEmailButton;
 @property (weak, nonatomic) IBOutlet UIButton *refreshButton;
 @property (weak, nonatomic) IBOutlet UIButton *deleteFilesButton;
@@ -75,7 +75,7 @@ FTPController *fileSender;
     }
     
     self.mailSettingsButton.enabled = YES;
-    self.mailSettingsButton.alpha=1;
+    //self.mailSettingsButton.alpha=1;
     self.refreshButton.enabled = YES;
     self.refreshButton.alpha=1;
     self.statusLabel.text=self.status;
@@ -93,7 +93,8 @@ FTPController *fileSender;
     self.refreshButton.enabled = NO;
     self.refreshButton.alpha=.5;
     self.mailSettingsButton.enabled = NO;
-    self.mailSettingsButton.alpha=.5;}
+    //self.mailSettingsButton.alpha=.5;
+}
 
 - (IBAction)refreshButton:(UIButton *)sender {
     [self disableButtons];
@@ -121,6 +122,39 @@ FTPController *fileSender;
 - (IBAction)emailButton:(UIButton *)sender {
     [self disableButtons];
     [self sendMailwithFiles:YES];
+}
+
+- (IBAction)takePicture:(id)sender {
+    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+    picker.sourceType = UIImagePickerControllerSourceTypeCamera;
+    picker.delegate = self;
+    [self presentViewController:picker animated:YES completion:nil];
+}
+
+-(void) imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
+    NSData *imageData = UIImagePNGRepresentation(image);
+    NSString *documentsDirectory = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"];
+    NSString *filePath = [documentsDirectory stringByAppendingPathComponent:[self getUniqueImageName]];
+    [imageData writeToFile:filePath atomically:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
+    [self refreshFiles];
+}
+
+-(NSString*) getUniqueImageName {
+    int num=0;
+    BOOL Done = NO;
+    while (!Done){
+        for(FileInfo *file in self.files){
+            if([file.name isEqualToString:[NSString stringWithFormat:@"image_%d.png",num]]){
+                num++;
+                break;
+            }
+        }
+        break;
+    }
+    return [NSString stringWithFormat:@"image_%d.png",num];
 }
 
 -(void)updateStatus:(NSString*)status withError:(BOOL)Error{
@@ -313,6 +347,9 @@ FTPController *fileSender;
     [self setFtpButton:nil];
     [self setMailSettingsButton:nil];
     [self setStatusLabel:nil];
+    [self setMailSettingsButton:nil];
     [super viewDidUnload];
+}
+- (IBAction)useCamera:(id)sender {
 }
 @end
