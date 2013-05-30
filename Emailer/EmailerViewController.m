@@ -104,8 +104,13 @@ FTPController *fileSender;
 }
 
 - (IBAction)deleteButton:(id)sender {
-    [self updateStatus:[NSString stringWithFormat:@"%@ deleted.",[self getNumFiles]] withError:NO];
-    [self deleteFiles];
+    UIAlertView *updateAlert = [[UIAlertView alloc]
+                                initWithTitle: @"Delete Files"
+                                message: @"Are you sure you want to delete all files?"
+                                delegate: self
+                                cancelButtonTitle: @"Cancel"
+                                otherButtonTitles:@"Delete",nil];
+    [updateAlert show];
 }
 
 - (IBAction)settingsButton:(id)sender {
@@ -146,22 +151,31 @@ FTPController *fileSender;
 
 -(NSString*) getUniqueImageName {
     int num=0;
-    BOOL Done = NO;
-    while (!Done){
+    BOOL uniqueName = NO;
+    while (!uniqueName){
+        uniqueName = YES; //Assume file doesn't exist unless found
         for(FileInfo *file in self.files){
             if([file.name isEqualToString:[NSString stringWithFormat:@"image_%d.png",num]]){
+                //File already exists.  Increment and check for next number
                 num++;
+                uniqueName = NO;
                 break;
             }
         }
-        break;
     }
     return [NSString stringWithFormat:@"image_%d.png",num];
 }
 
 -(void)updateStatus:(NSString*)status withError:(BOOL)Error{
     if(Error){
-        self.status=[NSString stringWithFormat:@"%@ Error: %@",[EmailerViewController getTime], status];
+        self.status=[NSString stringWithFormat:@"%@ : ERROR %@",[EmailerViewController getTime], status];
+        UIAlertView *updateAlert = [[UIAlertView alloc]
+                                    initWithTitle: @"Error"
+                                    message: status
+                                    delegate: self
+                                    cancelButtonTitle: @"OK"
+                                    otherButtonTitles:nil];
+        [updateAlert show];
     }
     else{
         self.status=[NSString stringWithFormat:@"%@ : %@",[EmailerViewController getTime], status];
@@ -273,6 +287,16 @@ FTPController *fileSender;
         [self enableButtons];
     }
     [self dismissModalViewControllerAnimated:YES];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if(buttonIndex==1)
+    {
+        [self updateStatus:[NSString stringWithFormat:@"%@ deleted.",[self getNumFiles]] withError:NO];
+        [self deleteFiles];
+    }
+    
 }
 
 -(void)deleteFiles {
