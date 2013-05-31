@@ -130,10 +130,21 @@ FTPController *fileSender;
 }
 
 - (IBAction)takePicture:(id)sender {
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
     UIImagePickerController *picker = [[UIImagePickerController alloc] init];
     picker.sourceType = UIImagePickerControllerSourceTypeCamera;
     picker.delegate = self;
     [self presentViewController:picker animated:YES completion:nil];
+    }
+    else {
+        UIAlertView *updateAlert = [[UIAlertView alloc]
+                                    initWithTitle: @"Camera unavailable"
+                                    message: @"Could not find camera"
+                                    delegate: self
+                                    cancelButtonTitle: @"OK"
+                                    otherButtonTitles: nil];
+        [updateAlert show];
+    }
 }
 
 -(void) imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
@@ -311,6 +322,20 @@ FTPController *fileSender;
     [self refreshFiles];
 }
 
+-(void)deleteFile:fileName {
+    NSFileManager *fileMgr = [NSFileManager defaultManager];
+    NSError *err;
+    if(self.files.count) {
+        for(int index=0; index<self.files.count; index++){
+            if([((FileInfo*)[self.files objectAtIndex:(index)]).name isEqualToString:fileName]){
+                NSString *tempPath = ((FileInfo*)[self.files objectAtIndex:(index)]).filePath;
+                [fileMgr removeItemAtPath:tempPath error:&err];
+            }
+        }
+    }
+    [self refreshFiles];
+}
+
 -(void)refreshFiles {
     [self.files removeAllObjects];
     self.files = [[NSMutableArray alloc] init];
@@ -352,10 +377,39 @@ FTPController *fileSender;
     NSString *fname = [[self.fileArray objectAtIndex:indexPath.row] name];
     NSString *size = [[self.fileArray objectAtIndex:indexPath.row] fsize];
     
-    cell.textLabel.text = [NSString stringWithFormat:@"%@ (%@)",fname,size];
+    UILabel *labelOne = (UILabel *)[cell viewWithTag:1];
+    UILabel *labelTwo = (UILabel *)[cell viewWithTag:2]; 
+    
+    labelOne.text = fname;
+    labelTwo.text = size;
+    
+    
+    //cell.textLabel.text = [NSString stringWithFormat:@"%@ (%@)",fname,size];
     //cell.textLabel.text = [[self.fileArray objectAtIndex:indexPath.row] name];
     return cell;
 }
+
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return UITableViewCellEditingStyleDelete;
+}
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath{
+    return YES;
+}
+
+
+- (void)tableView:(UITableView *)tv commitEditingStyle:(UITableViewCellEditingStyle)editingStyle
+forRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewCell *cell = [tv cellForRowAtIndexPath:indexPath];
+    // If row is deleted, remove it from the list.
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        UILabel *label = (UILabel *)[cell viewWithTag:1];
+        NSString *fileNameToDelete = label.text;
+        //[tv deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        [self deleteFile:fileNameToDelete];
+    }
+}
+
 - (BOOL)ShouldAutoRotate
 {
     return NO;

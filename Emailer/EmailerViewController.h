@@ -18,4 +18,7 @@
 
 @property (strong, nonatomic) UIStoryboardPopoverSegue *currentPopoverSegue;
 @property (strong, nonatomic) SettingsViewController *svc;
+
+- (void)tableView:(UITableView *)tv commitEditingStyle:(UITableViewCellEditingStyle)editingStyle;
+
 @end
