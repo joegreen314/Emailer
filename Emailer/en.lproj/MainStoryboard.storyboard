@@ -163,10 +163,27 @@
                                     <action selector="useCamera:" destination="2" eventType="touchUpInside" id="0OF-FR-YkQ"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="MPb-CW-xrC">
+                                <rect key="frame" x="664" y="151" width="64" height="66"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="Button" image="dave.png">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="daveButton:" destination="2" eventType="touchUpInside" id="Lye-Ob-RTn"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <connections>
+                        <outlet property="cameraButton" destination="U38-uC-ixP" id="plC-fr-wgT"/>
+                        <outlet property="daveButton" destination="MPb-CW-xrC" id="tIN-ZY-5Ub"/>
                         <outlet property="deleteFilesButton" destination="HES-cX-3Lw" id="VkA-P0-lZ5"/>
                         <outlet property="fileList" destination="a4W-kr-eI4" id="TKj-Ej-CTB"/>
                         <outlet property="ftpButton" destination="PZp-Km-isC" id="enn-LW-yUQ"/>
@@ -477,6 +494,7 @@
         <image name=" " width="16" height="16"/>
         <image name="background.png" width="768" height="1024"/>
         <image name="camera.png" width="49" height="38"/>
+        <image name="dave.png" width="59" height="56"/>
         <image name="delete.png" width="51" height="51"/>
         <image name="refresh.png" width="36" height="44"/>
     </resources>

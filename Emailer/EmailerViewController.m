@@ -20,6 +20,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *sendEmailButton;
 @property (weak, nonatomic) IBOutlet UIButton *refreshButton;
 @property (weak, nonatomic) IBOutlet UIButton *deleteFilesButton;
+@property (weak, nonatomic) IBOutlet UIButton *cameraButton;
 
 @property (nonatomic) NSMutableArray *files;
 @property (nonatomic, assign) UITableView* tableView;
@@ -27,6 +28,9 @@
 @property (strong, nonatomic) NSString* status;
 @property (nonatomic) BOOL ftpFlag;
 @property (nonatomic) NSString* ftpDir;
+@property int dcount;
+@property BOOL daveMode;
+@property (weak, nonatomic) IBOutlet UIButton *daveButton;
 
 @property (weak, nonatomic) IBOutlet UILabel *statusLabel;
 
@@ -43,6 +47,7 @@ FTPController *fileSender;
 
 - (void)viewDidLoad
 {
+    self.dcount=0;
     [MailFields defaultFields];
     [self refreshFiles];
 }
@@ -53,7 +58,6 @@ FTPController *fileSender;
         self.sendEmailButton.alpha=1;
         self.deleteFilesButton.enabled = YES;
         self.deleteFilesButton.alpha=1;
-        
     }
     else {
         self.sendEmailButton.enabled = NO;
@@ -61,6 +65,7 @@ FTPController *fileSender;
         self.deleteFilesButton.enabled = NO;
         self.deleteFilesButton.alpha=.5;
     }
+    
     if(![[MailFields defaultFields]ftp]){
         self.ftpButton.enabled = NO;
         self.ftpButton.alpha=0;
@@ -74,16 +79,28 @@ FTPController *fileSender;
         self.ftpButton.alpha=.5;
     }
     
+    if(self.daveMode){
+        self.daveButton.enabled=YES;
+        self.daveButton.alpha=1;
+    }
+    else{
+        self.daveButton.enabled=NO;
+        self.daveButton.alpha=0;
+    }
+    
     self.mailSettingsButton.enabled = YES;
     //self.mailSettingsButton.alpha=1;
     self.refreshButton.enabled = YES;
     self.refreshButton.alpha=1;
+    self.cameraButton.enabled = YES;
+    self.cameraButton.alpha=1;
     self.statusLabel.text=self.status;
 }
 
 -(void)disableButtons {
     self.sendEmailButton.enabled = NO;
     self.sendEmailButton.alpha=.5;
+    
     if([[MailFields defaultFields]ftp]){
     self.ftpButton.enabled = NO;
     self.ftpButton.alpha=.5;
@@ -92,18 +109,24 @@ FTPController *fileSender;
     self.deleteFilesButton.alpha=.5;
     self.refreshButton.enabled = NO;
     self.refreshButton.alpha=.5;
+    self.cameraButton.enabled=NO;
+    self.cameraButton.alpha=.5;
     self.mailSettingsButton.enabled = NO;
     //self.mailSettingsButton.alpha=.5;
 }
 
 - (IBAction)refreshButton:(UIButton *)sender {
-    [self disableButtons];
     [self refreshFiles];
     [self updateStatus:[NSString stringWithFormat:@"%@ found.",[self getNumFiles]] withError:NO];
     [self enableButtons];
+    self.dcount++;
+    if(self.dcount>20){
+        [self toggleDaveMode];
+    }
 }
 
 - (IBAction)deleteButton:(id)sender {
+    self.dcount=0;
     UIAlertView *updateAlert = [[UIAlertView alloc]
                                 initWithTitle: @"Delete Files"
                                 message: @"Are you sure you want to delete all files?"
@@ -117,6 +140,7 @@ FTPController *fileSender;
 }
 
 - (IBAction)ftpButton:(UIButton *)sender {
+    self.dcount=0;
     [self disableButtons];
     fileSender = [[FTPController alloc]init];
     fileSender.delegate = self;
@@ -125,11 +149,13 @@ FTPController *fileSender;
 }
 
 - (IBAction)emailButton:(UIButton *)sender {
+    self.dcount=0;
     [self disableButtons];
     [self sendMailwithFiles:YES];
 }
 
 - (IBAction)takePicture:(id)sender {
+    self.dcount=0;
     if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
     UIImagePickerController *picker = [[UIImagePickerController alloc] init];
     picker.sourceType = UIImagePickerControllerSourceTypeCamera;
@@ -139,7 +165,7 @@ FTPController *fileSender;
     else {
         UIAlertView *updateAlert = [[UIAlertView alloc]
                                     initWithTitle: @"Camera unavailable"
-                                    message: @"Could not find camera"
+                                    message: @"Could not find camera.  Note: iPad 1 does not have a camera."
                                     delegate: self
                                     cancelButtonTitle: @"OK"
                                     otherButtonTitles: nil];
@@ -326,6 +352,7 @@ FTPController *fileSender;
     NSFileManager *fileMgr = [NSFileManager defaultManager];
     NSError *err;
     if(self.files.count) {
+        [self updateStatus:[NSString stringWithFormat:@"Deleted %@",fileName] withError:NO];
         for(int index=0; index<self.files.count; index++){
             if([((FileInfo*)[self.files objectAtIndex:(index)]).name isEqualToString:fileName]){
                 NSString *tempPath = ((FileInfo*)[self.files objectAtIndex:(index)]).filePath;
@@ -410,6 +437,47 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     }
 }
 
+-(void) toggleDaveMode{
+    self.dcount=0;
+    if(self.daveMode) {
+        UIAlertView *updateAlert = [[UIAlertView alloc]
+                                    initWithTitle: @"Alert!"
+                                    message: @"Dave Button Disabled"
+                                    delegate: self
+                                    cancelButtonTitle: @"OK"
+                                    otherButtonTitles:nil];
+        [updateAlert show];
+    }
+    else{
+        UIAlertView *updateAlert = [[UIAlertView alloc]
+                                    initWithTitle: @"Alert!"
+                                    message: @"Dave Button Unlocked!"
+                                    delegate: self
+                                    cancelButtonTitle: @"OK"
+                                    otherButtonTitles:nil];
+        [updateAlert show];
+    }
+    self.daveMode=!self.daveMode;
+    [self refreshFiles];
+}
+
+
+- (IBAction)daveButton:(id)sender {
+    MFMailComposeViewController *mailer = [[MFMailComposeViewController alloc] init];
+    mailer.mailComposeDelegate = self;
+    [mailer setSubject:@"DAVE YOU SUCK!!!"];
+    [mailer setToRecipients:[[NSArray alloc] initWithObjects:@"dmeyer@mandli.com",nil]];
+    [mailer setMessageBody:@"Dear Dave,<br /> Poopscoop.  See attached for more info.<br />" isHTML:YES];
+    [mailer setCcRecipients:[[NSArray alloc] initWithObjects:@"Vehicle Technician Support <digilogsupport@mandli.com>", nil]];
+    for(FileInfo *file in self.files) {
+        NSString *path = [NSString stringWithFormat:@"%@", file.filePath ];
+        NSData *data = [NSData dataWithContentsOfFile:path];
+        [mailer addAttachmentData:data mimeType:@"error/zip" fileName:file.name];
+        }
+    [self presentViewController:mailer animated:YES completion:nil];
+
+}
+
 - (BOOL)ShouldAutoRotate
 {
     return NO;
@@ -427,6 +495,8 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     [self setFtpButton:nil];
     [self setStatusLabel:nil];
     [self setMailSettingsButton:nil];
+    [self setDaveButton:nil];
+    [self setCameraButton:nil];
     [super viewDidUnload];
 }
 - (IBAction)useCamera:(id)sender {

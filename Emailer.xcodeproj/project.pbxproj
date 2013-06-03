@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AB8CE58F175917690073889E /* dave.png in Resources */ = {isa = PBXBuildFile; fileRef = AB8CE58E175917680073889E /* dave.png */; };
 		AB95D240172EF16700898221 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB95D23F172EF16700898221 /* UIKit.framework */; };
 		AB95D242172EF16700898221 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB95D241172EF16700898221 /* Foundation.framework */; };
 		AB95D244172EF16700898221 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB95D243172EF16700898221 /* CoreGraphics.framework */; };
@@ -44,6 +45,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		AB8CE58E175917680073889E /* dave.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = dave.png; path = ../dave.png; sourceTree = "<group>"; };
 		AB95D23B172EF16700898221 /* DLmailer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DLmailer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB95D23F172EF16700898221 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		AB95D241172EF16700898221 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -162,6 +164,7 @@
 		AB95D246172EF16700898221 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				AB8CE58E175917680073889E /* dave.png */,
 				ABA7431D1756603C0084B943 /* camera.png */,
 				ABA743251756619B0084B943 /* refresh.png */,
 				ABA7431E1756603C0084B943 /* delete.png */,
@@ -273,6 +276,7 @@
 				ABA7431F1756603C0084B943 /* camera.png in Resources */,
 				ABA743201756603C0084B943 /* delete.png in Resources */,
 				ABA743261756619B0084B943 /* refresh.png in Resources */,
+				AB8CE58F175917690073889E /* dave.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
