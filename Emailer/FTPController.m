@@ -19,6 +19,9 @@
 @property (nonatomic) NSString* path;
 
 @property BOOL cancel;
+@property int totalSize;
+@property int currSize;
+@property int currProgress;
 
 @property (nonatomic, strong, readwrite) NSOutputStream *  writeStream;
 @property (nonatomic, strong, readwrite) NSInputStream *   readStream;
@@ -57,6 +60,7 @@
     self.currFile=0;
     self.currDir=0; //Number of directories created so far
     self.numDir=4; //Must create four directories
+    [self initProgress];
     
     [self createNewDir];
 }
@@ -108,6 +112,7 @@
     NSString *file=[[self.files objectAtIndex:self.currFile]filePath];
     NSString *fileName = [[self.files objectAtIndex:self.currFile]name];
     NSString *dest = [NSString stringWithFormat:@"%@%@", self.path, fileName];
+    self.currSize = [(FileInfo*)[self.files objectAtIndex:self.currFile] size];
     self.currFile++;
     
     NSLog(@"Sending file: %@ to ftpserver: %@" ,file, dest);
@@ -123,6 +128,21 @@
     self.cancel=YES;
     self.status=@"Transfer cancelled";
     [self endFTPTransfer];
+}
+
+-(void)initProgress{
+    self.totalSize=4+[self.files count];
+    //for(FileInfo *file in self.files){
+    //    self.totalSize += (int)[file size];
+    //}
+}
+
+-(void)updateProgress{
+    self.currProgress++;
+    //self.currProgress += self.currSize;
+    //NSNumber* progress = [NSNumber numberWithFloat:(float)self.currProgress / (float)self.totalSize];
+    NSNumber* progress = [NSNumber numberWithFloat:(float)self.currProgress/self.totalSize];
+    [delegate performSelector:@selector(updateFTPProgress:) withObject:(id)progress];
 }
 
 +(NSString*)getDate{
@@ -179,12 +199,13 @@
     
     switch (eventCode) {
         case NSStreamEventOpenCompleted: {
+            NSLog(@"OpenCompleted");
         } break;
         case NSStreamEventHasBytesAvailable: {
             assert(NO);     // should never happen for the output stream
         } break;
         case NSStreamEventHasSpaceAvailable: {
-            
+            NSLog(@"HasSpaceAvailable");
             // If we don't have any data buffered, go read the next chunk of data.
             
             if (self.bufferOffset == self.bufferLimit) {
@@ -220,6 +241,7 @@
             [self stopSendWithStatus:@"Transfer failed! Stream open error"];
         } break;
         case NSStreamEventEndEncountered: {
+            NSLog(@"EndEncountered");
             //This case runs when we are creating a directory
             [self stopSendWithStatus:nil];
         } break;
@@ -242,9 +264,14 @@
         [self.readStream close];
         self.readStream = nil;
     }
+    
     if(self.cancel){
         return;
     }
+    else{
+        [self updateProgress];
+    }
+    
     if(self.currDir!=self.numDir){
         [self createNewDir];
     }
@@ -253,7 +280,6 @@
     }
     else {
         [self endFTPTransfer];
-        NSLog(@"5");
     }
     //[self sendDidStopWithStatus:statusString];
 }

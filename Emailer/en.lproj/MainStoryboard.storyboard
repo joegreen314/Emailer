@@ -44,19 +44,23 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="1" contentMode="left" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="5hE-E3-eTa">
-                                                    <rect key="frame" x="20" y="2" width="432" height="41"/>
+                                                    <rect key="frame" x="20" y="2" width="443" height="41"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </label>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="2" contentMode="left" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="LMt-ly-82x">
-                                                    <rect key="frame" x="479" y="2" width="133" height="41"/>
+                                                    <rect key="frame" x="471" y="2" width="133" height="41"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </label>
+                                                <progressView opaque="NO" alpha="0.0" tag="3" contentMode="scaleToFill" progress="0.5" id="yIO-2Z-TCE">
+                                                    <rect key="frame" x="612" y="17" width="66" height="9"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </progressView>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
@@ -179,11 +183,11 @@
                                 </connections>
                             </button>
                             <progressView opaque="NO" contentMode="scaleToFill" progress="0.5" id="M4a-oM-oM7">
-                                <rect key="frame" x="320" y="272" width="150" height="9"/>
+                                <rect key="frame" x="293" y="272" width="204" height="9"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </progressView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="rw7-ma-BDl">
-                                <rect key="frame" x="364" y="162" width="74" height="44"/>
+                                <rect key="frame" x="358" y="203" width="74" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal" title="Cancel">
@@ -206,6 +210,8 @@
                         <outlet property="deleteFilesButton" destination="HES-cX-3Lw" id="VkA-P0-lZ5"/>
                         <outlet property="fileList" destination="a4W-kr-eI4" id="TKj-Ej-CTB"/>
                         <outlet property="ftpButton" destination="PZp-Km-isC" id="enn-LW-yUQ"/>
+                        <outlet property="ftpCancelButton" destination="rw7-ma-BDl" id="QtC-Fi-i0b"/>
+                        <outlet property="ftpProgress" destination="M4a-oM-oM7" id="xYZ-u2-Vkh"/>
                         <outlet property="mailSettingsButton" destination="CW4-2K-aMs" id="cfH-DN-NkW"/>
                         <outlet property="refreshButton" destination="ITh-FY-bKq" id="WUI-2C-jtQ"/>
                         <outlet property="sendEmailButton" destination="Iyr-7U-hU7" id="XGT-db-uRc"/>
@@ -517,6 +523,39 @@
         <image name="delete.png" width="51" height="51"/>
         <image name="refresh.png" width="36" height="44"/>
     </resources>
+    <classes>
+        <class className="EmailerViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/EmailerViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="cameraButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="daveButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="deleteFilesButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="fileList" candidateClass="UITableView"/>
+                <relationship kind="outlet" name="ftpButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="ftpCancelButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="ftpProgress" candidateClass="UIProgressView"/>
+                <relationship kind="outlet" name="mailSettingsButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="refreshButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="sendEmailButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="statusLabel" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="SettingsViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SettingsViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="bodyField" candidateClass="UITextView"/>
+                <relationship kind="outlet" name="ftpSwitch" candidateClass="UISwitch"/>
+                <relationship kind="outlet" name="passwordField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="saveButton" candidateClass="UIToolbar"/>
+                <relationship kind="outlet" name="subjectField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="urlField0" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="urlField1" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="urlField2" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="usernameField" candidateClass="UITextField"/>
+                <relationship kind="outletCollection" name="toFields" candidateClass="UITextField"/>
+            </relationships>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackTranslucent"/>
         <simulatedOrientationMetrics key="orientation"/>

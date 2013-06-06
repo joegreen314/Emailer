@@ -13,6 +13,7 @@
 @protocol FTPControllerDelegate <NSObject>
 
 -(void) finishFTPTransfer;
+-(void) updateFTPProgress:progress;
 
 @end
 

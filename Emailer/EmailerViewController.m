@@ -21,6 +21,9 @@
 @property (weak, nonatomic) IBOutlet UIButton *refreshButton;
 @property (weak, nonatomic) IBOutlet UIButton *deleteFilesButton;
 @property (weak, nonatomic) IBOutlet UIButton *cameraButton;
+@property (weak, nonatomic) IBOutlet UIButton *ftpCancelButton;
+
+@property (weak, nonatomic) IBOutlet UIProgressView *ftpProgress;
 
 @property (nonatomic) NSMutableArray *files;
 @property (nonatomic, assign) UITableView* tableView;
@@ -95,6 +98,11 @@ FTPController *fileSender;
     self.cameraButton.enabled = YES;
     self.cameraButton.alpha=1;
     self.statusLabel.text=self.status;
+    
+    self.ftpCancelButton.enabled=NO;
+    self.ftpCancelButton.alpha=0;
+    self.ftpProgress.alpha=0;
+    
 }
 
 -(void)disableButtons {
@@ -142,17 +150,20 @@ FTPController *fileSender;
 - (IBAction)ftpButton:(UIButton *)sender {
     self.dcount=0;
     [self disableButtons];
+    self.ftpProgress.alpha=1;
+    [self.ftpProgress setProgress:0];
+    self.ftpCancelButton.enabled=YES;
+    self.ftpCancelButton.alpha=1;
+    
     fileSender = [[FTPController alloc]init];
     fileSender.delegate = self;
     [fileSender beginFTPTransfer:self.files];
-    
 }
 
 - (IBAction)cancelFTP:(UIButton *)sender {
-    NSLog(@"CancelButton");
-    if(fileSender){
-        [fileSender cancelFTPTransfer];
-    }
+    self.ftpCancelButton.enabled=NO;
+    self.ftpCancelButton.alpha=0;
+    [fileSender cancelFTPTransfer];
 }
 
 
@@ -181,7 +192,7 @@ FTPController *fileSender;
     }
 }
 
--(void) imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
     NSData *imageData = UIImagePNGRepresentation(image);
@@ -233,6 +244,12 @@ FTPController *fileSender;
     formatter.dateFormat = @"h:mm a";
     NSString *result = [formatter stringFromDate:[NSDate date]];
     return result;
+}
+
+-(void)updateFTPProgress:(NSNumber*)progress{
+    float p=[progress floatValue];
+    NSLog(@"%f%%",p*100);
+    [self.ftpProgress setProgress:p];
 }
 
 -(void)finishFTPTransfer{
@@ -411,10 +428,10 @@ FTPController *fileSender;
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     NSString *fname = [[self.fileArray objectAtIndex:indexPath.row] name];
-    NSString *size = [[self.fileArray objectAtIndex:indexPath.row] fsize];
+    NSString *size = [[self.fileArray objectAtIndex:indexPath.row] sizeString];
     
     UILabel *labelOne = (UILabel *)[cell viewWithTag:1];
-    UILabel *labelTwo = (UILabel *)[cell viewWithTag:2]; 
+    UILabel *labelTwo = (UILabel *)[cell viewWithTag:2];
     
     labelOne.text = fname;
     labelTwo.text = size;
@@ -506,6 +523,8 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     [self setMailSettingsButton:nil];
     [self setDaveButton:nil];
     [self setCameraButton:nil];
+    [self setFtpCancelButton:nil];
+    [self setFtpProgress:nil];
     [super viewDidUnload];
 }
 - (IBAction)useCamera:(id)sender {

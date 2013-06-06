@@ -13,7 +13,8 @@
     @property (nonatomic) NSString * filePath;
     @property (nonatomic) NSString * directoryPath;
     @property (nonatomic) NSString * name;
-    @property (nonatomic) NSString * fsize;
+    @property (nonatomic) NSString * sizeString;
+    @property (nonatomic) NSInteger * size;
 @end
 
 @implementation FileInfo
@@ -25,6 +26,7 @@
         self.name = [MailFields sanitize:name];
         self.directoryPath=dir;
         self.filePath=[NSString stringWithFormat:@"%@/%@", dir, name];
+        self.size=size;
         double dsize = size;
         NSString *unit;
         if(size>1000000) {
@@ -40,7 +42,7 @@
         
         
         
-        self.fsize = [NSString stringWithFormat:@"%.1f %@", dsize, unit];
+        self.sizeString = [NSString stringWithFormat:@"%.1f %@", dsize, unit];
     }
     return self;
 }
