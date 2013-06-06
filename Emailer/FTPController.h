@@ -27,5 +27,6 @@
 @property (nonatomic) NSString* fullPath;
 
 -(void)beginFTPTransfer:(NSMutableArray*)files;
+-(void)cancelFTPTransfer;
 
 @end

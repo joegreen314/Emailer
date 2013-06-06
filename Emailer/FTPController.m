@@ -18,6 +18,8 @@
 @property (nonatomic) int numDir; //directories we must create before adding new files
 @property (nonatomic) NSString* path;
 
+@property BOOL cancel;
+
 @property (nonatomic, strong, readwrite) NSOutputStream *  writeStream;
 @property (nonatomic, strong, readwrite) NSInputStream *   readStream;
 
@@ -49,6 +51,7 @@
 }
 
 -(void)beginFTPTransfer:(NSMutableArray*)files {
+    self.cancel=NO;
     self.status=@"";
     self.files=files;
     self.currFile=0;
@@ -59,6 +62,12 @@
 }
 
 -(void)createNewDir{
+    
+    if(self.cancel){
+        [self endFTPTransfer];
+        NSLog(@"1");
+        return;
+    }
     switch (self.currDir){ //Format directories, then add them one at a time
         case 0:{
             //ftp://jgreen:j0egr33n@fezzik.mandli.com/StatenameDOT/
@@ -90,6 +99,12 @@
 }
 
 -(void)sendNextFile{
+    if(self.cancel){
+        [self endFTPTransfer];
+        
+        NSLog(@"2");
+        return;
+    }
     NSString *file=[[self.files objectAtIndex:self.currFile]filePath];
     NSString *fileName = [[self.files objectAtIndex:self.currFile]name];
     NSString *dest = [NSString stringWithFormat:@"%@%@", self.path, fileName];
@@ -101,6 +116,13 @@
 
 -(void)endFTPTransfer{
     [delegate performSelector:@selector(finishFTPTransfer)];
+    
+}
+
+-(void)cancelFTPTransfer{
+    self.cancel=YES;
+    self.status=@"Transfer cancelled";
+    [self endFTPTransfer];
 }
 
 +(NSString*)getDate{
@@ -124,6 +146,8 @@
     if(self.writeStream == nil){
         self.status=@"Transfer failed! Bad URL";
         [self endFTPTransfer];
+        
+        NSLog(@"3");
         return;
     }
     
@@ -146,7 +170,11 @@
 // An NSStream delegate callback that's called when events happen on our
 // network stream.
 {
-#pragma unused(aStream)
+    
+    if(self.cancel){
+        [self stopSendWithStatus:nil];
+        return;
+    }
     assert(aStream == self.writeStream);
     
     switch (eventCode) {
@@ -214,6 +242,9 @@
         [self.readStream close];
         self.readStream = nil;
     }
+    if(self.cancel){
+        return;
+    }
     if(self.currDir!=self.numDir){
         [self createNewDir];
     }
@@ -222,6 +253,7 @@
     }
     else {
         [self endFTPTransfer];
+        NSLog(@"5");
     }
     //[self sendDidStopWithStatus:statusString];
 }

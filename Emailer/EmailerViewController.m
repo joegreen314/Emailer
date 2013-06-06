@@ -148,6 +148,14 @@ FTPController *fileSender;
     
 }
 
+- (IBAction)cancelFTP:(UIButton *)sender {
+    NSLog(@"CancelButton");
+    if(fileSender){
+        [fileSender cancelFTPTransfer];
+    }
+}
+
+
 - (IBAction)emailButton:(UIButton *)sender {
     self.dcount=0;
     [self disableButtons];
@@ -228,6 +236,7 @@ FTPController *fileSender;
 }
 
 -(void)finishFTPTransfer{
+    NSLog(@"finishFTPTransfer");
     self.ftpDir=[fileSender.fullPath copy];
     if([fileSender getStatus]){
         [self updateStatus:[fileSender getStatus] withError:YES];
