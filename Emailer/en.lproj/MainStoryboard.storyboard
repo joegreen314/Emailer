@@ -187,9 +187,9 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </progressView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="rw7-ma-BDl">
-                                <rect key="frame" x="358" y="203" width="74" height="44"/>
+                                <rect key="frame" x="326" y="199" width="138" height="66"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="34"/>
                                 <state key="normal" title="Cancel">
                                     <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -527,6 +527,15 @@
         <class className="EmailerViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/EmailerViewController.h"/>
             <relationships>
+                <relationship kind="action" name="cancelFTP:" candidateClass="UIButton"/>
+                <relationship kind="action" name="daveButton:"/>
+                <relationship kind="action" name="deleteButton:"/>
+                <relationship kind="action" name="emailButton:" candidateClass="UIButton"/>
+                <relationship kind="action" name="ftpButton:" candidateClass="UIButton"/>
+                <relationship kind="action" name="refreshButton:" candidateClass="UIButton"/>
+                <relationship kind="action" name="settingsButton:"/>
+                <relationship kind="action" name="takePicture:"/>
+                <relationship kind="action" name="useCamera:"/>
                 <relationship kind="outlet" name="cameraButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="daveButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="deleteFilesButton" candidateClass="UIButton"/>
@@ -543,6 +552,8 @@
         <class className="SettingsViewController" superclassName="UITableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/SettingsViewController.h"/>
             <relationships>
+                <relationship kind="action" name="cancelButton:"/>
+                <relationship kind="action" name="saveSettings:" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="bodyField" candidateClass="UITextView"/>
                 <relationship kind="outlet" name="ftpSwitch" candidateClass="UISwitch"/>
                 <relationship kind="outlet" name="passwordField" candidateClass="UITextField"/>
