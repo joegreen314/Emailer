@@ -233,37 +233,37 @@
                                                     <rect key="frame" x="83" y="11" width="200" height="30"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits"/>
+                                                    <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="emailAddress"/>
                                                 </textField>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="bezel" minimumFontSize="17" id="clY-ZA-Xf7">
                                                     <rect key="frame" x="291" y="87" width="200" height="28"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits"/>
+                                                    <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="emailAddress"/>
                                                 </textField>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="bezel" minimumFontSize="17" id="6Kf-0c-LLQ">
                                                     <rect key="frame" x="83" y="87" width="200" height="28"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits"/>
+                                                    <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="emailAddress"/>
                                                 </textField>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="bezel" minimumFontSize="17" id="1rW-gp-f1i">
                                                     <rect key="frame" x="83" y="51" width="200" height="28"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits"/>
+                                                    <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="emailAddress"/>
                                                 </textField>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="bezel" minimumFontSize="17" id="Pw4-3R-X4d">
                                                     <rect key="frame" x="291" y="51" width="200" height="28"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits"/>
+                                                    <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="emailAddress"/>
                                                 </textField>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="bezel" minimumFontSize="17" id="Hlf-K3-4vH">
                                                     <rect key="frame" x="291" y="11" width="200" height="28"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits"/>
+                                                    <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="emailAddress"/>
                                                 </textField>
                                             </subviews>
                                         </tableViewCellContentView>
@@ -359,19 +359,19 @@
                                                     <rect key="frame" x="336" y="30" width="135" height="28"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits"/>
+                                                    <textInputTraits key="textInputTraits" autocorrectionType="no"/>
                                                 </textField>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="bezel" minimumFontSize="17" id="w6y-3e-XQp">
                                                     <rect key="frame" x="193" y="30" width="135" height="28"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits"/>
+                                                    <textInputTraits key="textInputTraits" autocorrectionType="no"/>
                                                 </textField>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="fezzik.mandli.com" borderStyle="bezel" minimumFontSize="17" id="UMu-v1-lbG">
                                                     <rect key="frame" x="50" y="30" width="135" height="28"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits"/>
+                                                    <textInputTraits key="textInputTraits" autocorrectionType="no"/>
                                                 </textField>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="/" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="aPT-vh-waB">
                                                     <rect key="frame" x="330" y="34" width="77" height="21"/>
@@ -422,13 +422,13 @@
                                                     <rect key="frame" x="322" y="4" width="121" height="28"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits"/>
+                                                    <textInputTraits key="textInputTraits" autocorrectionType="no"/>
                                                 </textField>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="jgreen" borderStyle="bezel" minimumFontSize="17" id="vGc-D6-Xb5">
                                                     <rect key="frame" x="107" y="4" width="121" height="28"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits"/>
+                                                    <textInputTraits key="textInputTraits" autocorrectionType="no"/>
                                                 </textField>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Password:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="o9b-VX-odV">
                                                     <rect key="frame" x="241" y="7" width="80" height="21"/>
