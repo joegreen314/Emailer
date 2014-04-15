@@ -88,8 +88,8 @@ NSUserDefaults *defaults;
             [MailFields setBody:[NSString stringWithFormat:
                                  @"%@ Collection Report",
                                  [[UIDevice currentDevice]name]]];
-            [MailFields setUsername:@"jgreen"];
-            [MailFields setPassword:@"j0egr33n"];
+            [MailFields setUsername:@"username"];
+            [MailFields setPassword:@"password"];
             [MailFields setUrl:[[NSMutableArray alloc] initWithObjects:@"fezzik.mandli.com",@"StatenameDOT", @"Daily_Upload", nil]];
             [MailFields setFtpStatus:YES];
             [MailFields setRecipients:[[NSMutableArray alloc] initWithObjects:@"jgreen@mandli.com",nil]];

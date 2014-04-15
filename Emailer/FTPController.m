@@ -74,7 +74,7 @@
     }
     switch (self.currDir){ //Format directories, then add them one at a time
         case 0:{
-            //ftp://jgreen:j0egr33n@fezzik.mandli.com/StatenameDOT/
+            //ftp://user:pass@address/StatenameDOT/
             self.path = [NSString stringWithFormat:@"ftp://%@/%@/",
                          [[[MailFields defaultFields] url] objectAtIndex:0],
                          [[[MailFields defaultFields] url] objectAtIndex:1]];
