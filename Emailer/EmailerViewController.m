@@ -491,9 +491,9 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 - (IBAction)daveButton:(id)sender {
     MFMailComposeViewController *mailer = [[MFMailComposeViewController alloc] init];
     mailer.mailComposeDelegate = self;
-    [mailer setSubject:@"DAVE YOU SUCK!!!"];
+    [mailer setSubject:@"!!!"];
     [mailer setToRecipients:[[NSArray alloc] initWithObjects:@"dmeyer@mandli.com",nil]];
-    [mailer setMessageBody:@"Dear Dave,<br /> Poopscoop.  See attached for more info.<br />" isHTML:YES];
+    [mailer setMessageBody:@"Dear Dave,<br /> Everything is broken.  See attached for more info.<br />" isHTML:YES];
     [mailer setCcRecipients:[[NSArray alloc] initWithObjects:@"Vehicle Technician Support <digilogsupport@mandli.com>", nil]];
     for(FileInfo *file in self.files) {
         NSString *path = [NSString stringWithFormat:@"%@", file.filePath ];
