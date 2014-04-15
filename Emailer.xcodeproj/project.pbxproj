@@ -243,8 +243,14 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = Emailer;
+				LastTestingUpgradeCheck = 0510;
 				LastUpgradeCheck = 0450;
 				ORGANIZATIONNAME = Digilog;
+				TargetAttributes = {
+					AB95D23A172EF16700898221 = {
+						DevelopmentTeam = QMDH3PJCT9;
+					};
+				};
 			};
 			buildConfigurationList = AB95D235172EF16700898221 /* Build configuration list for PBXProject "Emailer" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -426,16 +432,17 @@
 		AB95D275172EF16800898221 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Mandli Communications, Inc. (QMDH3PJCT9)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Mandli Communications, Inc. (QMDH3PJCT9)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Emailer/Emailer-Prefix.pch";
 				INFOPLIST_FILE = "Emailer/Emailer-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
-				ONLY_ACTIVE_ARCH = NO;
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "856D9187-1608-4150-BA95-A51A8C62EF74";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "856D9187-1608-4150-BA95-A51A8C62EF74";
+				PROVISIONING_PROFILE = "E8E41BF3-DD29-4BC5-951A-8284BA16FFED";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				SDKROOT = iphoneos;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -443,16 +450,17 @@
 		AB95D276172EF16800898221 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Mandli Communications, Inc. (QMDH3PJCT9)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Mandli Communications, Inc. (QMDH3PJCT9)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Emailer/Emailer-Prefix.pch";
 				INFOPLIST_FILE = "Emailer/Emailer-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
-				ONLY_ACTIVE_ARCH = NO;
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "856D9187-1608-4150-BA95-A51A8C62EF74";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "856D9187-1608-4150-BA95-A51A8C62EF74";
+				PROVISIONING_PROFILE = "E8E41BF3-DD29-4BC5-951A-8284BA16FFED";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				SDKROOT = iphoneos;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -519,16 +527,17 @@
 		ABED348A17C69B6900BC9457 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Mandli Communications, Inc. (QMDH3PJCT9)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Mandli Communications, Inc. (QMDH3PJCT9)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Emailer/Emailer-Prefix.pch";
 				INFOPLIST_FILE = "Emailer/Emailer-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
-				ONLY_ACTIVE_ARCH = NO;
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "856D9187-1608-4150-BA95-A51A8C62EF74";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "856D9187-1608-4150-BA95-A51A8C62EF74";
+				PROVISIONING_PROFILE = "E8E41BF3-DD29-4BC5-951A-8284BA16FFED";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				SDKROOT = iphoneos;
 				WRAPPER_EXTENSION = app;
 			};
 			name = AdHoc;

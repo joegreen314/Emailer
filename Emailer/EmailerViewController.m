@@ -510,7 +510,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 }
 - (NSUInteger)supportedInterfaceOrientations
 {
-    return UIInterfaceOrientationMaskPortrait;
+    return UIInterfaceOrientationPortrait;
 }
 - (void)viewDidUnload {
     [self setSendEmailButton:nil];

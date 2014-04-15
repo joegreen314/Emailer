@@ -75,7 +75,8 @@
     [MailFields setBody:self.bodyField.text];
     NSMutableArray *recipientFields = [[NSMutableArray alloc]init];
     for(UITextField *field in self.toFields) {
-        [recipientFields addObject:field.text];
+        if(field.text)
+            [recipientFields addObject:field.text];
     }
     [MailFields setRecipients:recipientFields];
     NSMutableArray *urlFields = [[NSMutableArray alloc]initWithObjects:
